@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">HerbalifeApp</string>
+
+    <string-array name="ciudades">
+        <item>Valparaíso</item>
+        <item>Viña del Mar</item>
+        <item>Los Andes</item>
+        <item>Quintero</item>
+        <item>Quillota</item>
+        <item>San Felipe</item>
+        <item>Villa Alemana</item>
+        <item>Limache</item>
+        <item>Quilpué</item>
+        <item>San Antonio</item>
+        <item>La Calera</item>
+        <item>Petorca</item>
+        <item>Concón</item>
+        <item>Casablanca</item>
+        <item>Cartagena</item>
+        <item>El Tabo</item>
+        <item>La Ligua</item>
+        <item>Zapallar</item>
+    </string-array>
+
+    <string-array name="complexion">
+        <item>Pequeña</item>
+        <item>Mediana</item>
+        <item>Grande</item>
+    </string-array>
+
+    <string-array name="productos">
+        <item>CR7 Drive</item>
+        <item>Sport Activator</item>
+        <item>Herbalife24 Rebuild Strength</item>
+        <item>Batido nutricional</item>
+        <item>Proteína en polvo</item>
+        <item>Multivitamínico</item>
+        <item>Cell-U-Loss</item>
+        <item>NRG Mezcla de té</item>
+        <item>Liftoff</item>
+        <item>Herbalifeline</item>
+        <item>Xtra-cal</item>
+        <item>Fibra Activa</item>
+        <item>Concentrado Aloe Vera</item>
+        <item>Té y hierbas instantáneo (sabores) 50g</item>
+        <item>Té y hierbas instantáneo (original) 100g</item>
+    </string-array>
+</resources>

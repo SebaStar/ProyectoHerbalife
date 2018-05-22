@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context="cl.inacap.herbalifeproject.REClienteActivity">
+
+    <include
+        android:id="@+id/recliente_toolbar"
+        layout="@layout/custom_toolbar_back" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <cl.inacap.herbalifeproject.view.ClearableEditText
+                android:id="@+id/recliente_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edit_text"
+                android:hint="Nombre"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="12dp" />
+
+            <cl.inacap.herbalifeproject.view.ClearableEditText
+                android:id="@+id/recliente_telefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edit_text"
+                android:hint="Teléfono de contacto"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:padding="12dp" />
+
+            <TextView
+                android:id="@+id/recliente_fecha_nacimiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edit_text"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="Fecha de nacimiento"
+                android:padding="12dp"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/recliente_ciudad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edit_text"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:drawableEnd="@drawable/ic_down_button"
+                android:hint="Ciudad"
+                android:padding="12dp"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:weightSum="1">
+
+                <cl.inacap.herbalifeproject.view.ClearableEditText
+                    android:id="@+id/recliente_altura"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Altura"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:padding="12dp" />
+
+                <TextView
+                    android:id="@+id/recliente_edad"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Edad"
+                    android:padding="12dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/recliente_complexion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edit_text"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:drawableEnd="@drawable/ic_down_button"
+                android:hint="Complexión física"
+                android:padding="12dp"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/recliente_programa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edit_text"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:drawableEnd="@drawable/ic_down_button"
+                android:hint="Programa nutricional"
+                android:padding="12dp"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/recliente_registrar_editar"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custom_button"
+                android:enabled="false"
+                android:text="Registrar/Editar"
+                android:textColor="#6F6F6F" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

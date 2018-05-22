@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context="cl.inacap.herbalifeproject.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:src="@drawable/herbalife_logo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:paddingBottom="10dp">
+
+            <cl.inacap.herbalifeproject.view.ClearableEditText
+                android:id="@+id/login_nombreUsuarioTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:drawablePadding="15dp"
+                android:drawableStart="@drawable/ic_user"
+                android:hint="Nombre de usuario"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="15dp" />
+
+            <cl.inacap.herbalifeproject.view.ViewablePasswordEditText
+                android:id="@+id/login_contraseñaTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:drawablePadding="15dp"
+                android:drawableStart="@drawable/ic_key"
+                android:hint="Contraseña"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:padding="15dp" />
+
+            <CheckBox
+                android:id="@+id/login_noCerrarSesionCbx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:buttonTint="@android:color/white"
+                android:text="No cerrar sesión"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/login_iniciarSesionBtn"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_button"
+                android:enabled="false"
+                android:text="Iniciar sesión"
+                android:textColor="#6F6F6F" />
+
+            <Button
+                android:id="@+id/login_olvidarBtn"
+                style="?attr/buttonBarButtonStyle"
+                android:text="¿Olvidaste tu contraseña?"
+                android:textColor="@android:color/white"
+                android:textAllCaps="false"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/login_registrarBtn"
+                style="?attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Regístrate en Herbalife"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

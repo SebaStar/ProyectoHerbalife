@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context="cl.inacap.herbalifeproject.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:src="@drawable/herbalife_logo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="15dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:paddingBottom="15dp">
+
+            <cl.inacap.herbalifeproject.view.ClearableEditText
+                android:id="@+id/registro_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:hint="Nombre completo"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="12dp" />
+
+            <cl.inacap.herbalifeproject.view.ClearableEditText
+                android:id="@+id/registro_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:hint="Nombre de usuario"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:padding="12dp" />
+
+            <cl.inacap.herbalifeproject.view.ViewablePasswordEditText
+                android:id="@+id/registro_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:hint="Contraseña"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:padding="12dp" />
+
+            <cl.inacap.herbalifeproject.view.ViewablePasswordEditText
+                android:id="@+id/registro_confirmarPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:hint="Repetir contraseña"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:padding="12dp" />
+
+            <cl.inacap.herbalifeproject.view.ClearableEditText
+                android:id="@+id/registro_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:hint="Correo electrónico"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:padding="12dp" />
+
+            <Button
+                android:id="@+id/registro_registrarseBtn"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custom_button"
+                android:enabled="false"
+                android:text="Registrarse"
+                android:textColor="#6F6F6F" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

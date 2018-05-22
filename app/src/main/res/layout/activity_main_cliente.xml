@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cl.inacap.herbalifeproject.MainClienteActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/main_cliente_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:layout_collapseMode="pin"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:navigationIcon="?attr/homeAsUpIndicator">
+
+        <include layout="@layout/layout_custom_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="35dp" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:padding="30dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/main_cliente_registrarSeguimiento"
+            style="?attr/borderlessButtonStyle"
+            android:background="@drawable/custom_button"
+            android:text="Registrar seguimiento"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/main_cliente_verProgramaNutricional"
+            style="?attr/borderlessButtonStyle"
+            android:background="@drawable/custom_button"
+            android:text="Ver programa nutricional"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/main_cliente_historialSeguimiento"
+            style="?attr/borderlessButtonStyle"
+            android:background="@drawable/custom_button"
+            android:text="Historial seguimiento"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/main_cliente_graficosProgreso"
+            style="?attr/borderlessButtonStyle"
+            android:background="@drawable/custom_button"
+            android:text="Gráficos de progreso"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>

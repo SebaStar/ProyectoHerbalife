@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="15dp"
+        android:paddingTop="10dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/lc_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.08"
+            android:gravity="center"
+            android:text="#"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/lc_nombre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.82"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="Nombre del cliente"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/lc_menu"
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:src="@drawable/ic_menu" />
+
+    </LinearLayout>
+
+    <View
+        android:background="#DBDBDB"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+</LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cl.inacap.herbalifeproject.LProductosActivity">
+
+    <include
+        android:id="@+id/lps_toolbar"
+        layout="@layout/custom_toolbar_back" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lps_listadoProductos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lps_toolbar" />
+
+    <TextView
+        android:id="@+id/lps_vacioTv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lps_toolbar"
+        android:gravity="center"
+        android:text="Sin productos"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/lps_fabAgregar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_add" />
+
+</RelativeLayout>
