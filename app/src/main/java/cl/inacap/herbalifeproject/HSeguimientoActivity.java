@@ -61,11 +61,12 @@ public class HSeguimientoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         tituloTv.setText("Historial de seguimiento");
         hdao = new HerbalifeDAO(context);
-        cliente = hdao.buscarCliente(getIntent().getIntExtra(Solicitud.CLIENTE_ID, -1));
+        final int clienteId = getIntent().getIntExtra(Solicitud.CLIENTE_ID, -1);
+        cliente = hdao.buscarCliente(clienteId);
         clienteTv.setText(cliente.getNombre());
         seguimientos = hdao.listarSeguimientos(cliente.getId(), Preferences.getPreferenceInt(context, Preferences.MAIN_PREF, Preferences.USUARIO_ID));
         for (Seguimiento seguimiento : seguimientos)
-            fragments.add(HSeguimientoFragment.newInstance(seguimiento.getId()));
+            fragments.add(HSeguimientoFragment.newInstance(seguimiento.getId(), clienteId));
         adapter = new HistorialSeguimientoPagerAdapter(getSupportFragmentManager(), fragments);
         container.setAdapter(adapter);
 

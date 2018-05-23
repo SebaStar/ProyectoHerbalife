@@ -121,4 +121,8 @@ public class SystemUtils {
         Pattern patron = Pattern.compile("^[_a-z0-9-]+(-[_a-z0-9])*@[a-z]+(\\.[a-z]{2,})$");
         return patron.matcher(email).find();
     }
+
+    public float getImc(float peso, float estatura) {
+        return peso / (float) Math.pow(estatura, estatura);
+    }
 }

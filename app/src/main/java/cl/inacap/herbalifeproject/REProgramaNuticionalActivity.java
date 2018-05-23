@@ -27,6 +27,7 @@ import cl.inacap.herbalifeproject.dto.Producto;
 import cl.inacap.herbalifeproject.dto.ProgramaNutricional;
 import cl.inacap.herbalifeproject.interfaces.Listeners;
 import cl.inacap.herbalifeproject.utils.Solicitud;
+import cl.inacap.herbalifeproject.utils.SystemUtils;
 import cl.inacap.herbalifeproject.view.ClearableEditText;
 
 public class REProgramaNuticionalActivity extends AppCompatActivity {
@@ -63,7 +64,19 @@ public class REProgramaNuticionalActivity extends AppCompatActivity {
 
         hdao = new HerbalifeDAO(context);
 
-        // eventos de EditText y TextView.
+        nombreTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
+            }
+        });
+        duracionTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
+            }
+        });
+
         revisarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
