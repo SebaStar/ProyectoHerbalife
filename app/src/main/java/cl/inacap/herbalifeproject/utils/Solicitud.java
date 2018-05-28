@@ -10,7 +10,7 @@ public class Solicitud {
     public static final String LISTADO_PRODUCTOS = "listado_productos";
 
     public static final int RESULTADO_OK = 1;
-    public static final int RESULTADO_NO_OK = 0;
+    public static final int RESULTADO_CANCELADO = 0;
 
     public static final int CODIGO_LISTADO_PRODUCTOS = 100;
 }

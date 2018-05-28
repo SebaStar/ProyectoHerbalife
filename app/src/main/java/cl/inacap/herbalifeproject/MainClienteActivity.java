@@ -53,13 +53,17 @@ public class MainClienteActivity extends AppCompatActivity {
         registrarSeguimiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(context, RESeguimientoActivity.class);
+                i.putExtra(Solicitud.CLIENTE_ID, cliente.getId());
+                startActivity(i);
             }
         });
         verProgramaNutricional.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(context, AProgramaNutricionalActivity.class);
+                i.putExtra(Solicitud.CLIENTE_ID, cliente.getId());
+                startActivity(i);
             }
         });
         historialSeguimiento.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +77,9 @@ public class MainClienteActivity extends AppCompatActivity {
         graficosProgreso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, GraficosActivity.class));
+                Intent i = new Intent(context, GraficosActivity.class);
+                i.putExtra(Solicitud.CLIENTE_ID, cliente.getId());
+                startActivity(i);
             }
         });
     }

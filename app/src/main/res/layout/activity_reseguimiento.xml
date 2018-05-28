@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cl.inacap.herbalifeproject.RESeguimientoActivity">
+
+    <include android:id="@+id/reseguimiento_toolbar"
+        layout="@layout/custom_toolbar_back" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/reseguimiento_fecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edit_text"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="Fecha de nacimiento"
+                android:padding="12dp"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:weightSum="1">
+
+                <cl.inacap.herbalifeproject.view.ClearableEditText
+                    android:id="@+id/reseguimiento_peso"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Peso (Kg)"
+                    android:layout_marginEnd="5dp"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:padding="12dp" />
+
+                <cl.inacap.herbalifeproject.view.ClearableEditText
+                    android:id="@+id/reseguimiento_grasa"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Grasa total (%)"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:padding="12dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:weightSum="1">
+
+                <cl.inacap.herbalifeproject.view.ClearableEditText
+                    android:id="@+id/reseguimiento_osea"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Masa osea (%)"
+                    android:layout_marginEnd="5dp"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:padding="12dp" />
+
+                <cl.inacap.herbalifeproject.view.ClearableEditText
+                    android:id="@+id/reseguimiento_agua"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Agua (%)"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:padding="12dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:weightSum="1">
+
+                <cl.inacap.herbalifeproject.view.ClearableEditText
+                    android:id="@+id/reseguimiento_muscular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Masa muscular (%)"
+                    android:layout_marginEnd="5dp"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:padding="12dp" />
+
+                <cl.inacap.herbalifeproject.view.ClearableEditText
+                    android:id="@+id/reseguimiento_imc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="IMC"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:padding="12dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:weightSum="1">
+
+                <cl.inacap.herbalifeproject.view.ClearableEditText
+                    android:id="@+id/reseguimiento_bmr"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="BMR (Kcal)"
+                    android:layout_marginEnd="5dp"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:padding="12dp" />
+
+                <cl.inacap.herbalifeproject.view.ClearableEditText
+                    android:id="@+id/reseguimiento_edad"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Edad metabólica"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:padding="12dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:weightSum="1">
+
+                <cl.inacap.herbalifeproject.view.ClearableEditText
+                    android:id="@+id/reseguimiento_viceral"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Grasa viceral (%)"
+                    android:layout_marginEnd="5dp"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:padding="12dp" />
+
+                <cl.inacap.herbalifeproject.view.ClearableEditText
+                    android:id="@+id/reseguimiento_cintura"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Cintura (cm)"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:padding="12dp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/reseguimiento_registrar_editar"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custom_button"
+                android:enabled="false"
+                android:text="Registrar/Editar"
+                android:textColor="#6F6F6F" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

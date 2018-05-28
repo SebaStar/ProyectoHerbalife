@@ -181,15 +181,13 @@ public class HerbalifeDAO {
         return new ProgramaNutricional(id, cursor.getString(0), cursor.getInt(1));
     }
 
-    public ProgramaNutricional[] listarProgramasNutricionales() {
+    public List<ProgramaNutricional> listarProgramasNutricionales() {
         String sql = "SELECT id, nombre, duracion FROM programa_nutricional";
         Cursor cursor = conex.getReadableDatabase().rawQuery(sql, null);
-        if (cursor.getCount() == 0)
-            return null;
-        ProgramaNutricional[] programas = new ProgramaNutricional[cursor.getCount()];
+        List<ProgramaNutricional> programas = new ArrayList<>();
         while (cursor.moveToNext()) {
-            programas[cursor.getPosition()] = new ProgramaNutricional(cursor.getInt(0),
-                    cursor.getString(1), cursor.getInt(2));
+            programas.add(new ProgramaNutricional(cursor.getInt(0),
+                    cursor.getString(1), cursor.getInt(2)));
         }
         cursor.close();
         return programas;
@@ -199,7 +197,7 @@ public class HerbalifeDAO {
         String sql = "SELECT max(id) FROM programa_nutricional";
         Cursor cursor = conex.getReadableDatabase().rawQuery(sql, null);
         if (cursor.getCount() == 0)
-            return -1;
+            return 0;
         cursor.moveToNext();
         return cursor.getInt(0);
     }

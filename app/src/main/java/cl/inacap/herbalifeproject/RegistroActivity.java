@@ -58,9 +58,9 @@ public class RegistroActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registrarseBtn.setEnabled(s.length() > 0 && usernameTxt.getText().toString().length() > 0 &&
-                        passwordTxt.getText().toString().length() > 0 && repeatPasswordTxt.getText().toString().length() > 0 &&
-                        emailTxt.getText().toString().length() > 0);
+                registrarseBtn.setEnabled(s.toString().trim().length() > 0 && usernameTxt.getText().toString().trim().length() > 0 &&
+                        passwordTxt.getText().toString().trim().length() > 0 && repeatPasswordTxt.getText().toString().trim().length() > 0 &&
+                        emailTxt.getText().toString().trim().length() > 0);
                 registrarseBtn.setTextColor(registrarseBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -77,9 +77,9 @@ public class RegistroActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registrarseBtn.setEnabled(s.length() > 0 && nombreTxt.getText().toString().length() > 0 &&
-                        passwordTxt.getText().toString().length() > 0 && repeatPasswordTxt.getText().toString().length() > 0 &&
-                        emailTxt.getText().toString().length() > 0);
+                registrarseBtn.setEnabled(s.toString().trim().length() > 0 && nombreTxt.getText().toString().trim().length() > 0 &&
+                        passwordTxt.getText().toString().trim().length() > 0 && repeatPasswordTxt.getText().toString().trim().length() > 0 &&
+                        emailTxt.getText().toString().trim().length() > 0);
                 registrarseBtn.setTextColor(registrarseBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -96,9 +96,9 @@ public class RegistroActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registrarseBtn.setEnabled(s.length() > 0 && usernameTxt.getText().toString().length() > 0 &&
-                        nombreTxt.getText().toString().length() > 0 && repeatPasswordTxt.getText().toString().length() > 0 &&
-                        emailTxt.getText().toString().length() > 0);
+                registrarseBtn.setEnabled(s.toString().trim().length() > 0 && usernameTxt.getText().toString().trim().length() > 0 &&
+                        nombreTxt.getText().toString().trim().length() > 0 && repeatPasswordTxt.getText().toString().trim().length() > 0 &&
+                        emailTxt.getText().toString().trim().length() > 0);
                 registrarseBtn.setTextColor(registrarseBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -115,9 +115,9 @@ public class RegistroActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registrarseBtn.setEnabled(s.length() > 0 && usernameTxt.getText().toString().length() > 0 &&
-                        passwordTxt.getText().toString().length() > 0 && nombreTxt.getText().toString().length() > 0 &&
-                        emailTxt.getText().toString().length() > 0);
+                registrarseBtn.setEnabled(s.toString().trim().length() > 0 && usernameTxt.getText().toString().trim().length() > 0 &&
+                        passwordTxt.getText().toString().trim().length() > 0 && nombreTxt.getText().toString().trim().length() > 0 &&
+                        emailTxt.getText().toString().trim().length() > 0);
                 registrarseBtn.setTextColor(registrarseBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -134,9 +134,9 @@ public class RegistroActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registrarseBtn.setEnabled(s.length() > 0 && usernameTxt.getText().toString().length() > 0 &&
-                        passwordTxt.getText().toString().length() > 0 && repeatPasswordTxt.getText().toString().length() > 0 &&
-                        nombreTxt.getText().toString().length() > 0);
+                registrarseBtn.setEnabled(s.toString().trim().length() > 0 && usernameTxt.getText().toString().trim().length() > 0 &&
+                        passwordTxt.getText().toString().trim().length() > 0 && repeatPasswordTxt.getText().toString().trim().length() > 0 &&
+                        nombreTxt.getText().toString().trim().length() > 0);
                 registrarseBtn.setTextColor(registrarseBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -172,12 +172,13 @@ public class RegistroActivity extends AppCompatActivity {
             }
         });
 
+        // REVISAR
         registrarseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SystemUtils.getInstance().keyboard(context, v, true);
-                String pass = passwordTxt.getText().toString(), rPass = repeatPasswordTxt.getText().toString(),
-                        username = usernameTxt.getText().toString(), email = emailTxt.getText().toString();
+                String pass = passwordTxt.getText().toString().trim(), rPass = repeatPasswordTxt.getText().toString().trim(),
+                        username = usernameTxt.getText().toString().trim(), email = emailTxt.getText().toString().trim();
 
                 String errorUsername = null, errorPass = null, errorRepetirPass = null, errorEmail = null;
                 usuario = hdao.buscarUsuarioPorUsername(username);

@@ -1,63 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="cl.inacap.herbalifeproject.REProgramaNuticionalActivity">
 
-    <include
-        android:id="@+id/reprograma_toolbar"
-        layout="@layout/custom_toolbar_back" />
-
     <LinearLayout
-        android:layout_below="@id/reprograma_toolbar"
-        android:orientation="vertical"
-        android:padding="15dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <cl.inacap.herbalifeproject.view.ClearableEditText
-            android:id="@+id/reprograma_nombreTxt"
-            android:background="@drawable/custom_edit_text"
-            android:padding="12dp"
-            android:hint="Nombre del programa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <cl.inacap.herbalifeproject.view.ClearableEditText
-            android:id="@+id/reprograma_duracionTxt"
-            android:background="@drawable/custom_edit_text"
-            android:padding="12dp"
-            android:layout_marginTop="10dp"
-            android:hint="Duración"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <include
+            android:id="@+id/reprograma_toolbar"
+            layout="@layout/custom_toolbar_back" />
 
         <LinearLayout
-            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="1">
+            android:layout_height="match_parent"
+            android:layout_below="@id/reprograma_toolbar"
+            android:orientation="vertical"
+            android:padding="15dp">
 
-            <TextView
-                android:id="@+id/reprograma_cantidadTv"
-                android:gravity="center"
-                android:textColor="@android:color/black"
-                android:text="No hay productos."
-                android:layout_width="0dp"
+            <cl.inacap.herbalifeproject.view.ClearableEditText
+                android:id="@+id/reprograma_nombreTxt"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5" />
+                android:background="@drawable/custom_edit_text"
+                android:hint="Nombre del programa"
+                android:padding="12dp" />
 
-            <Button
-                android:id="@+id/reprograma_revisarBtn"
-                style="?attr/borderlessButtonStyle"
-                android:background="@drawable/custom_button"
-                android:textColor="@android:color/white"
-                android:text="Revisar"
-                android:layout_width="0dp"
+            <cl.inacap.herbalifeproject.view.ClearableEditText
+                android:id="@+id/reprograma_duracionTxt"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5" />
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edit_text"
+                android:hint="Duración"
+                android:padding="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/reprograma_cantidadTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:text="No hay productos."
+                    android:textColor="@android:color/black" />
+
+                <Button
+                    android:id="@+id/reprograma_revisarBtn"
+                    style="?attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custom_button"
+                    android:text="Revisar"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -65,12 +71,11 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/reprograma_fabAgregar"
-        android:src="@drawable/ic_done"
-        android:scaleType="centerCrop"
-        android:layout_margin="15dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="15dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_done" />
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

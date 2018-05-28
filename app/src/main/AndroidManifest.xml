@@ -31,10 +31,6 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UnusedActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".RestaurarActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
@@ -64,6 +60,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".LProductosActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AProgramaNutricionalActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RESeguimientoActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
     </application>

@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                loginBtn.setEnabled(s.length() > 0 && passwordTxt.getText().toString().length() > 0);
+                loginBtn.setEnabled(s.length() > 0 && passwordTxt.getText().toString().trim().length() > 0);
                 loginBtn.setTextColor(loginBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                loginBtn.setEnabled(s.length() > 0 && usernameTxt.getText().toString().length() > 0);
+                loginBtn.setEnabled(s.length() > 0 && usernameTxt.getText().toString().trim().length() > 0);
                 loginBtn.setTextColor(loginBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -117,11 +117,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SystemUtils.getInstance().keyboard(context, v, true);
-                usuario = hdao.buscarUsuarioPorUsername(usernameTxt.getText().toString());
+                usuario = hdao.buscarUsuarioPorUsername(usernameTxt.getText().toString().trim());
                 if (usuario == null)
                     usernameTxt.setError("El nombre de usuario NO existe");
                 else {
-                    String contraseñaEncriptada = SystemUtils.getInstance().getEncryptedPassword(passwordTxt.getText().toString());
+                    String contraseñaEncriptada = SystemUtils.getInstance().getEncryptedPassword(passwordTxt.getText().toString().trim());
                     if (usuario.getClave().equals(contraseñaEncriptada)) {
                         Preferences.setPreferenceBoolean(context, Preferences.MAIN_PREF, Preferences.NO_CERRAR_SESION, noLogoutCbx.isChecked());
                         Preferences.setPreferenceInt(context, Preferences.MAIN_PREF, Preferences.USUARIO_ID, usuario.getId());
@@ -153,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.setCancelable(false);
 
                 final EditText emailParaTxt = dialog.findViewById(R.id.dem_emailTxt);
-                Button aceptarBtn, cancelarBtn;
+                final Button aceptarBtn, cancelarBtn;
                 aceptarBtn = dialog.findViewById(R.id.dem_aceptarBtn);
                 cancelarBtn = dialog.findViewById(R.id.dem_cancelarBtn);
 
@@ -163,12 +163,28 @@ public class LoginActivity extends AppCompatActivity {
                         SystemUtils.getInstance().keyboard(context, v, !hasFocus);
                     }
                 });
+                emailParaTxt.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        aceptarBtn.setEnabled(SystemUtils.getInstance().isEmailValid(emailParaTxt.getText().toString().trim()));
+                    }
+                });
                 aceptarBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         SystemUtils.getInstance().keyboard(context, v, true);
                         if (SystemUtils.getInstance().hasInternetConnection(context)) {
-                            usuario = hdao.buscarUsuarioPorEmail(emailParaTxt.getText().toString());
+                            usuario = hdao.buscarUsuarioPorEmail(emailParaTxt.getText().toString().trim());
                             if (usuario == null) {
                                 new AlertDialog.Builder(context).setTitle("Email desconocido").setCancelable(false)
                                         .setMessage("El email ingresado no pertenece a ningún usuario registrado en el sistema.")
@@ -178,12 +194,12 @@ public class LoginActivity extends AppCompatActivity {
                                                 dialog.dismiss();
                                             }
                                         }).create().show();
-                                return;
+                            } else {
+                                List enviarA = Arrays.asList(new String[]{emailParaTxt.getText().toString().trim()});
+                                new SendMailTask(context, new Object[]{usuario, SystemUtils.getInstance().getEncryptedPassword(contraseñaGenerada), hdao})
+                                        .execute("bot.herbalife2018@gmail.com", SystemUtils.getInstance().getPassword(), enviarA,
+                                                "Recuperar contraseña", "Su nueva contraseña para Herbalife es: " + contraseñaGenerada);
                             }
-                            List enviarA = Arrays.asList(new String[]{emailParaTxt.getText().toString()});
-                            new SendMailTask(context, new Object[]{ usuario, SystemUtils.getInstance().getEncryptedPassword(contraseñaGenerada), hdao })
-                                    .execute("bot.herbalife2018@gmail.com", SystemUtils.getInstance().getPassword(), enviarA,
-                                    "Recuperar contraseña", "Su nueva contraseña para Herbalife es: " + contraseñaGenerada);
                         } else
                             Toast.makeText(context, "¡No tienes conexión a Internet!", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();

@@ -1,8 +1,10 @@
 package cl.inacap.herbalifeproject;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -68,12 +70,34 @@ public class LClientesActivity extends AppCompatActivity {
 
             @Override
             public void onEditClick(int position) {
-                Toast.makeText(context, "Editar seleccionado", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(context, REClienteActivity.class);
+                i.putExtra(Solicitud.MODO_ID, 1);
+                i.putExtra(Solicitud.CLIENTE_ID, clientes.get(position).getId());
+                startActivity(i);
             }
 
             @Override
-            public void onDeleteClick(int position) {
-                Toast.makeText(context, "Eliminar seleccionado", Toast.LENGTH_SHORT).show();
+            public void onDeleteClick(final int position) {
+                new AlertDialog.Builder(context).setTitle("Eliminar cliente")
+                        .setMessage("¿Está seguro de querer eliminar a " + clientes.get(position).getNombre() + "?")
+                        .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (hdao.eliminarCliente(clientes.get(position).getId())) {
+                                    clientes.remove(position);
+                                    adapter.update(clientes);
+                                    Toast.makeText(context, "El cliente se eliminó correctamente.", Toast.LENGTH_SHORT).show();
+                                } else
+                                    Toast.makeText(context, "No se pudo eliminar el cliente.", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
             }
         });
         listaClientes.setAdapter(adapter);

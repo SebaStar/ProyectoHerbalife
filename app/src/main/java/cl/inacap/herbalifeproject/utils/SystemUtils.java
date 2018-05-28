@@ -125,4 +125,16 @@ public class SystemUtils {
     public float getImc(float peso, float estatura) {
         return peso / (float) Math.pow(estatura, estatura);
     }
+
+    public String getMensajeBienvenida() {
+        Calendar ahora = Calendar.getInstance();
+        int hora = ahora.get(Calendar.HOUR_OF_DAY);
+
+        if (hora >= 6 && hora < 12)
+            return "Buenos días";
+        else if (hora >= 12 && hora < 20)
+            return "Buenas tardes";
+        else
+            return "Buenas noches";
+    }
 }

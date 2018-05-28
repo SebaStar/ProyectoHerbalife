@@ -15,13 +15,17 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import cl.inacap.herbalifeproject.dao.HerbalifeDAO;
 import cl.inacap.herbalifeproject.dto.Cliente;
+import cl.inacap.herbalifeproject.dto.ProgramaNutricional;
 import cl.inacap.herbalifeproject.utils.Preferences;
+import cl.inacap.herbalifeproject.utils.Solicitud;
 import cl.inacap.herbalifeproject.utils.SystemUtils;
 import cl.inacap.herbalifeproject.view.ClearableEditText;
 
@@ -33,9 +37,11 @@ public class REClienteActivity extends AppCompatActivity {
     Button registrarEditarBtn;
 
     HerbalifeDAO hdao;
-    String[] complexiones, ciudades;
+    List<ProgramaNutricional> programasNutricionales = new ArrayList<>();
+    String[] complexiones, ciudades, programas;
 
     Context context;
+    int ciudad = -1,complexion = -1, programaNutricional = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +64,42 @@ public class REClienteActivity extends AppCompatActivity {
         registrarEditarBtn = findViewById(R.id.recliente_registrar_editar);
 
         hdao = new HerbalifeDAO(context);
+        final int modo = getIntent().getIntExtra(Solicitud.MODO_ID, 0);
+        final int usuarioId = Preferences.getPreferenceInt(context, Preferences.MAIN_PREF, Preferences.USUARIO_ID);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Agregar/Editar cliente");
+        getSupportActionBar().setTitle(modo == 0 ? "Registrar cliente" : "Editar cliente");
 
+        ciudades = getResources().getStringArray(R.array.ciudades);
+        complexiones = getResources().getStringArray(R.array.complexion);
+        programasNutricionales = hdao.listarProgramasNutricionales();
+
+        if (!programasNutricionales.isEmpty()) {
+            programas = new String[programasNutricionales.size()];
+            for (int i = 0; i < programasNutricionales.size(); i++)
+                programas[i] = programasNutricionales.get(i).getNombre();
+        }
+
+        if (modo == 1) {
+            Cliente c = hdao.buscarCliente(getIntent().getIntExtra(Solicitud.CLIENTE_ID, 0));
+            ciudad = c.getCiudad();
+            complexion = c.getComplexion();
+            programaNutricional = c.getProgramaNutricionalId() - 1;
+
+            nombreTxt.setText(c.getNombre());
+            telefonoTxt.setText(c.getTelefono());
+            alturaTxt.setText(String.valueOf(c.getAltura()));
+            fechaNacimientoTv.setText(c.getFechaNacimiento());
+            ciudadTv.setText(ciudades[ciudad]);
+            Calendar calEdad = Calendar.getInstance();
+            String[] fechaSplit = c.getFechaNacimiento().split("/");
+            calEdad.set(Integer.parseInt(fechaSplit[2]), Integer.parseInt(fechaSplit[1]), Integer.parseInt(fechaSplit[0]));
+            edadTv.setText(SystemUtils.getInstance().getEdad(calEdad));
+            complexionTv.setText(complexiones[complexion]);
+            programaNutricionalTv.setText(programasNutricionales.get(programaNutricional + 1).getNombre());
+        }
+
+        registrarEditarBtn.setText(modo == 0 ? "Registrar" : "Editar");
         nombreTxt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -75,10 +113,10 @@ public class REClienteActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registrarEditarBtn.setEnabled(s.length() > 0 && telefonoTxt.getText().toString().length() > 0 &&
-                        alturaTxt.getText().toString().length() > 0 && fechaNacimientoTv.getText().toString().length() > 0 &&
-                        ciudadTv.getText().toString().length() > 0 && edadTv.getText().toString().length() > 0 &&
-                        complexionTv.getText().toString().length() > 0);
+                registrarEditarBtn.setEnabled(s.toString().trim().length() > 0 && telefonoTxt.getText().toString().trim().length() > 0 &&
+                        alturaTxt.getText().toString().trim().length() > 0 && fechaNacimientoTv.getText().toString().trim().length() > 0 &&
+                        ciudadTv.getText().toString().trim().length() > 0 && edadTv.getText().toString().trim().length() > 0 &&
+                        complexionTv.getText().toString().trim().length() > 0);
                 registrarEditarBtn.setTextColor(registrarEditarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -95,10 +133,10 @@ public class REClienteActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registrarEditarBtn.setEnabled(s.length() > 0 && nombreTxt.getText().toString().length() > 0 &&
-                        alturaTxt.getText().toString().length() > 0 && fechaNacimientoTv.getText().toString().length() > 0 &&
-                        ciudadTv.getText().toString().length() > 0 && edadTv.getText().toString().length() > 0 &&
-                        complexionTv.getText().toString().length() > 0);
+                registrarEditarBtn.setEnabled(s.toString().trim().length() > 0 && nombreTxt.getText().toString().trim().length() > 0 &&
+                        alturaTxt.getText().toString().trim().length() > 0 && fechaNacimientoTv.getText().toString().trim().length() > 0 &&
+                        ciudadTv.getText().toString().trim().length() > 0 && edadTv.getText().toString().trim().length() > 0 &&
+                        complexionTv.getText().toString().trim().length() > 0);
                 registrarEditarBtn.setTextColor(registrarEditarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -115,10 +153,10 @@ public class REClienteActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registrarEditarBtn.setEnabled(s.length() > 0 && telefonoTxt.getText().toString().length() > 0 &&
-                        nombreTxt.getText().toString().length() > 0 && fechaNacimientoTv.getText().toString().length() > 0 &&
-                        ciudadTv.getText().toString().length() > 0 && edadTv.getText().toString().length() > 0 &&
-                        complexionTv.getText().toString().length() > 0);
+                registrarEditarBtn.setEnabled(s.toString().trim().length() > 0 && telefonoTxt.getText().toString().trim().length() > 0 &&
+                        nombreTxt.getText().toString().trim().length() > 0 && fechaNacimientoTv.getText().toString().trim().length() > 0 &&
+                        ciudadTv.getText().toString().trim().length() > 0 && edadTv.getText().toString().trim().length() > 0 &&
+                        complexionTv.getText().toString().trim().length() > 0);
                 registrarEditarBtn.setTextColor(registrarEditarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -135,10 +173,10 @@ public class REClienteActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registrarEditarBtn.setEnabled(s.length() > 0 && telefonoTxt.getText().toString().length() > 0 &&
-                        alturaTxt.getText().toString().length() > 0 && nombreTxt.getText().toString().length() > 0 &&
-                        ciudadTv.getText().toString().length() > 0 && edadTv.getText().toString().length() > 0 &&
-                        complexionTv.getText().toString().length() > 0);
+                registrarEditarBtn.setEnabled(s.toString().trim().length() > 0 && telefonoTxt.getText().toString().trim().length() > 0 &&
+                        alturaTxt.getText().toString().trim().length() > 0 && nombreTxt.getText().toString().trim().length() > 0 &&
+                        ciudadTv.getText().toString().trim().length() > 0 && edadTv.getText().toString().trim().length() > 0 &&
+                        complexionTv.getText().toString().trim().length() > 0);
                 registrarEditarBtn.setTextColor(registrarEditarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -155,10 +193,10 @@ public class REClienteActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registrarEditarBtn.setEnabled(s.length() > 0 && telefonoTxt.getText().toString().length() > 0 &&
-                        alturaTxt.getText().toString().length() > 0 && fechaNacimientoTv.getText().toString().length() > 0 &&
-                        nombreTxt.getText().toString().length() > 0 && edadTv.getText().toString().length() > 0 &&
-                        complexionTv.getText().toString().length() > 0);
+                registrarEditarBtn.setEnabled(s.toString().trim().length() > 0 && telefonoTxt.getText().toString().trim().length() > 0 &&
+                        alturaTxt.getText().toString().trim().length() > 0 && fechaNacimientoTv.getText().toString().trim().length() > 0 &&
+                        nombreTxt.getText().toString().trim().length() > 0 && edadTv.getText().toString().trim().length() > 0 &&
+                        complexionTv.getText().toString().trim().length() > 0);
                 registrarEditarBtn.setTextColor(registrarEditarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -175,10 +213,10 @@ public class REClienteActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registrarEditarBtn.setEnabled(s.length() > 0 && telefonoTxt.getText().toString().length() > 0 &&
-                        alturaTxt.getText().toString().length() > 0 && fechaNacimientoTv.getText().toString().length() > 0 &&
-                        ciudadTv.getText().toString().length() > 0 && nombreTxt.getText().toString().length() > 0 &&
-                        complexionTv.getText().toString().length() > 0);
+                registrarEditarBtn.setEnabled(s.toString().trim().length() > 0 && telefonoTxt.getText().toString().trim().length() > 0 &&
+                        alturaTxt.getText().toString().trim().length() > 0 && fechaNacimientoTv.getText().toString().trim().length() > 0 &&
+                        ciudadTv.getText().toString().trim().length() > 0 && nombreTxt.getText().toString().trim().length() > 0 &&
+                        complexionTv.getText().toString().trim().length() > 0);
                 registrarEditarBtn.setTextColor(registrarEditarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -195,10 +233,10 @@ public class REClienteActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registrarEditarBtn.setEnabled(s.length() > 0 && telefonoTxt.getText().toString().length() > 0 &&
-                        alturaTxt.getText().toString().length() > 0 && fechaNacimientoTv.getText().toString().length() > 0 &&
-                        ciudadTv.getText().toString().length() > 0 && edadTv.getText().toString().length() > 0 &&
-                        nombreTxt.getText().toString().length() > 0);
+                registrarEditarBtn.setEnabled(s.toString().trim().length() > 0 && telefonoTxt.getText().toString().trim().length() > 0 &&
+                        alturaTxt.getText().toString().trim().length() > 0 && fechaNacimientoTv.getText().toString().trim().length() > 0 &&
+                        ciudadTv.getText().toString().trim().length() > 0 && edadTv.getText().toString().trim().length() > 0 &&
+                        nombreTxt.getText().toString().trim().length() > 0);
                 registrarEditarBtn.setTextColor(registrarEditarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -247,12 +285,12 @@ public class REClienteActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    ciudades = getResources().getStringArray(R.array.ciudades);
                     new AlertDialog.Builder(context).setTitle("Ciudad")
-                            .setSingleChoiceItems(ciudades, -1, new DialogInterface.OnClickListener() {
+                            .setSingleChoiceItems(ciudades, ciudad, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    ciudadTv.setText(ciudades[which]);
+                                    ciudad = which;
+                                    ciudadTv.setText(ciudades[ciudad]);
                                     dialog.dismiss();
                                     alturaTxt.requestFocus();
                                     SystemUtils.getInstance().keyboard(context);
@@ -264,9 +302,8 @@ public class REClienteActivity extends AppCompatActivity {
         ciudadTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ciudades = getResources().getStringArray(R.array.ciudades);
                 new AlertDialog.Builder(context).setTitle("Ciudad")
-                        .setSingleChoiceItems(ciudades, -1, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(ciudades, ciudad, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 ciudadTv.setText(ciudades[which]);
@@ -281,13 +318,13 @@ public class REClienteActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    complexiones = getResources().getStringArray(R.array.complexion);
                     new AlertDialog.Builder(context).setTitle("Complexión física")
-                            .setSingleChoiceItems(complexiones, -1, new DialogInterface.OnClickListener() {
+                            .setSingleChoiceItems(complexiones, complexion, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    complexionTv.setText(complexiones[which]);
-                                    // programa nutricional
+                                    complexion = which;
+                                    complexionTv.setText(complexiones[complexion]);
+                                    programaNutricionalTv.requestFocus();
                                     dialog.dismiss();
                                 }
                             }).setCancelable(true).create().show();
@@ -297,13 +334,43 @@ public class REClienteActivity extends AppCompatActivity {
         complexionTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                complexiones = getResources().getStringArray(R.array.complexion);
                 new AlertDialog.Builder(context).setTitle("Complexión física")
-                        .setSingleChoiceItems(complexiones, -1, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(complexiones, complexion, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                complexionTv.setText(complexiones[which]);
-                                // programa nutricional
+                                complexion = which;
+                                complexionTv.setText(complexiones[complexion]);
+                                programaNutricionalTv.requestFocus();
+                                dialog.dismiss();
+                            }
+                        }).setCancelable(true).create().show();
+            }
+        });
+        programaNutricionalTv.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    new AlertDialog.Builder(context).setTitle("Programa nutricional")
+                            .setSingleChoiceItems(programas, programaNutricional, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    programaNutricional = which;
+                                    programaNutricionalTv.setText(programas[programaNutricional]);
+                                    dialog.dismiss();
+                                }
+                            }).setCancelable(true).create().show();
+                }
+            }
+        });
+        programaNutricionalTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(context).setTitle("Programa nutricional")
+                        .setSingleChoiceItems(programas, programaNutricional, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                programaNutricional = which;
+                                programaNutricionalTv.setText(programas[programaNutricional]);
                                 dialog.dismiss();
                             }
                         }).setCancelable(true).create().show();
@@ -319,11 +386,21 @@ public class REClienteActivity extends AppCompatActivity {
         registrarEditarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //validar opciones
-                hdao.agregarCliente(new Cliente(nombreTxt.getText().toString(), telefonoTxt.getText().toString(),
-                        fechaNacimientoTv.getText().toString(), 1, Float.parseFloat(alturaTxt.getText().toString()),
-                        1, Preferences.getPreferenceInt(context, Preferences.MAIN_PREF, Preferences.USUARIO_ID),
-                        0));
+                if (modo == 0) {
+                    if (hdao.agregarCliente(new Cliente(nombreTxt.getText().toString(), telefonoTxt.getText().toString(),
+                            fechaNacimientoTv.getText().toString(), ciudad, Float.parseFloat(alturaTxt.getText().toString()),
+                            complexion, usuarioId, programaNutricional + 1)))
+                        Toast.makeText(context, "El cliente se registró correctamente.", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(context, "No se pudo registrar el cliente.", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (hdao.modificarCliente(getIntent().getIntExtra(Solicitud.CLIENTE_ID, 0), new Cliente(nombreTxt.getText().toString(),
+                            telefonoTxt.getText().toString(), fechaNacimientoTv.getText().toString(), ciudad, Float.parseFloat(alturaTxt.getText().toString()),
+                            complexion, usuarioId, programaNutricional + 1)))
+                        Toast.makeText(context, "El cliente se modificó correctamente.", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(context, "No se pudo modificar el cliente.", Toast.LENGTH_SHORT).show();
+                }
                 finish();
             }
         });

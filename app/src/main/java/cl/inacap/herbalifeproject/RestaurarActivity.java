@@ -61,7 +61,7 @@ public class RestaurarActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                aceptarBtn.setEnabled(s.length() > 0 && passwordTxt.getText().toString().length() > 0 && repeatPasswordTxt.getText().toString().length() > 0);
+                aceptarBtn.setEnabled(s.toString().trim().length() > 0 && passwordTxt.getText().toString().trim().length() > 0 && repeatPasswordTxt.getText().toString().trim().length() > 0);
                 aceptarBtn.setTextColor(aceptarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -78,7 +78,7 @@ public class RestaurarActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                aceptarBtn.setEnabled(s.length() > 0 && currentPasswordTxt.getText().toString().length() > 0 && repeatPasswordTxt.getText().toString().length() > 0);
+                aceptarBtn.setEnabled(s.toString().trim().length() > 0 && currentPasswordTxt.getText().toString().trim().length() > 0 && repeatPasswordTxt.getText().toString().trim().length() > 0);
                 aceptarBtn.setTextColor(aceptarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -95,7 +95,7 @@ public class RestaurarActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                aceptarBtn.setEnabled(s.length() > 0 && passwordTxt.getText().toString().length() > 0 && currentPasswordTxt.getText().toString().length() > 0);
+                aceptarBtn.setEnabled(s.toString().trim().length() > 0 && passwordTxt.getText().toString().trim().length() > 0 && currentPasswordTxt.getText().toString().trim().length() > 0);
                 aceptarBtn.setTextColor(aceptarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
             }
         });
@@ -123,8 +123,8 @@ public class RestaurarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SystemUtils.getInstance().keyboard(context, v, true);
-                String actual = SystemUtils.getInstance().getEncryptedPassword(currentPasswordTxt.getText().toString()),
-                        pass = passwordTxt.getText().toString(), rPass = repeatPasswordTxt.getText().toString();
+                String actual = SystemUtils.getInstance().getEncryptedPassword(currentPasswordTxt.getText().toString().trim()),
+                        pass = passwordTxt.getText().toString().trim(), rPass = repeatPasswordTxt.getText().toString().trim();
                 if (!usuario.getClave().equals(actual))
                     currentPasswordTxt.setError("Contraseña incorrecta");
                 else {
@@ -136,7 +136,7 @@ public class RestaurarActivity extends AppCompatActivity {
                         else {
                             usuario.setClave(SystemUtils.getInstance().getEncryptedPassword(pass));
                             if (hdao.modificarUsuario(usuario.getId(), usuario)) {
-                                Toast.makeText(context, "¡La contraseña se cambió con éxito!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "¡La contraseña se cambió correctamente!", Toast.LENGTH_SHORT).show();
                                 Preferences.setPreferenceBoolean(context, Preferences.TEMP_PREF, Preferences.PASS_ENVIADA, false);
                                 startActivity(new Intent(context, LoginActivity.class));
                                 finish();

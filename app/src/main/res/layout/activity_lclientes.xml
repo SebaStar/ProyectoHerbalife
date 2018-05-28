@@ -38,6 +38,8 @@
         android:id="@+id/lc_vacio"
         android:gravity="center"
         android:text="Sin clientes"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
         android:visibility="gone"
         android:padding="15dp"
         android:layout_width="match_parent"

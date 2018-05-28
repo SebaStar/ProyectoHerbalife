@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -90,23 +92,44 @@ public class REProgramaNuticionalActivity extends AppCompatActivity {
         aceptarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // validar campos.
-                hdao.agregarProgramaNutricional(new ProgramaNutricional(nombreTxt.getText().toString(), Integer.parseInt(duracionTxt.getText().toString())));
-                int ultimoId = hdao.getUltimoIdDeProgramaNutricional();
+                String nombre = nombreTxt.getText().toString().trim(), duracion = duracionTxt.getText().toString().trim(),
+                        nombreError = null, duracionError = null, productosError = null;
 
-                for (Producto p : productos) {
-                    hdao.agregarProducto(p);
-                    hdao.agregarPnProducto(ultimoId, p.getId());
+                if (nombre.isEmpty() || duracion.isEmpty() || productos.isEmpty()) {
+                    nombreError = nombre.isEmpty() ? "Campo requerido" : null;
+                    duracionError = duracion.isEmpty() ? "Campo requerido" : null;
+                    productosError = productos.isEmpty() ? "El programa nutricional debe tener al menos un producto." : null;
+                } else {
+                    if (hdao.agregarProgramaNutricional(new ProgramaNutricional(nombre, Integer.parseInt(duracion)))) {
+                        int ultimoId = hdao.getUltimoIdDeProgramaNutricional();
+
+                        for (Producto p : productos) {
+                            if (hdao.agregarProducto(p)) {
+                                hdao.agregarPnProducto(ultimoId, p.getId());
+                            } else break;
+                        }
+                        Toast.makeText(context, "El programa nutricional se agregó correctamente.", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(context, "No se pudo agregar el programa nutricional.", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
+                nombreTxt.setError(nombreError);
+                duracionTxt.setError(duracionError);
+                if (productosError != null)
+                    Snackbar.make(v, productosError, Snackbar.LENGTH_SHORT);
             }
         });
-        // agregar diálogo de salida
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                SystemUtils.getInstance().mostrarDialogo(context).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        SystemUtils.getInstance().mostrarDialogo(context).show();
     }
 
     @Override

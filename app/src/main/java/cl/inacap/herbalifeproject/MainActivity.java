@@ -11,10 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 import cl.inacap.herbalifeproject.dao.HerbalifeDAO;
 import cl.inacap.herbalifeproject.dto.Usuario;
 import cl.inacap.herbalifeproject.utils.Preferences;
 import cl.inacap.herbalifeproject.utils.Solicitud;
+import cl.inacap.herbalifeproject.utils.SystemUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         titleTv.setText("Inicio");
-        usernameTv.setText("Hola, " + usuario.getNombre());
+        usernameTv.setText(SystemUtils.getInstance().getMensajeBienvenida() + ", " + usuario.getNombre());
+
         agregarPrograma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

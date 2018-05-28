@@ -59,6 +59,12 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    public void update(List<Cliente> cls) {
+        clientes.clear();
+        clientes.addAll(cls);
+        reset();
+    }
+
     @Override
     public Filter getFilter() {
         return new Filter() {
