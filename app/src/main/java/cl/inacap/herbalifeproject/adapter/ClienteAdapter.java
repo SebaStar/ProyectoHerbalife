@@ -19,12 +19,25 @@ import cl.inacap.herbalifeproject.R;
 import cl.inacap.herbalifeproject.dto.Cliente;
 import cl.inacap.herbalifeproject.interfaces.Listeners.OnRowItemClickListener;
 
+/**
+ * @Author Sebastián
+ */
+
 public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHolder> implements Filterable {
 
     private List<Cliente> clientes;
     private List<Cliente> clientesFiltrados;
     private Context context;
     private OnRowItemClickListener listener;
+
+    /**
+     * Constructor de la clase
+     *
+     * @param clientes
+     * @param context
+     * @param listener
+     */
+
 
     public ClienteAdapter(List<Cliente> clientes, Context context, OnRowItemClickListener listener){
         this.clientes = clientes;
@@ -33,6 +46,12 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
         this.listener = listener;
     }
 
+    /**
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -40,24 +59,45 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
         return new ViewHolder(v, listener);
     }
 
+    /**
+     *  Rellena los controles con datos
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bindCliente(clientesFiltrados.get(position), position);
     }
 
+    /**
+     * Recibe el contador de la listra filtrada
+     * @return cantidad de clientes que fueron filtrados
+     */
     @Override
     public int getItemCount() {
         return clientesFiltrados.size();
     }
 
+    /**
+     * revisa si la lista de clientes se encuentra vacia
+     * @return
+     */
     public boolean isEmpty() {
         return clientesFiltrados.isEmpty();
     }
 
+    /**
+     * Retorna la lista filtrada a su estado inicial
+     */
     public void reset() {
         clientesFiltrados = clientes;
         notifyDataSetChanged();
     }
+
+    /**
+     * Actualiza la lista completa
+     * @param cls
+     */
 
     public void update(List<Cliente> cls) {
         clientes.clear();
@@ -65,6 +105,10 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
         reset();
     }
 
+    /**
+     * Retorna un filtro que puede ser usado como restriccion
+     * @return
+     */
     @Override
     public Filter getFilter() {
         return new Filter() {

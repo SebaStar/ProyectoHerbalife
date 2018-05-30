@@ -9,7 +9,9 @@ public class Conexion extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "herbalife.db";
     private static final int DATABASE_VERSION = 1;
-
+    /**
+     * Array de string que contiene sentencias sql para la creacion de la base de datos
+     */
     private static final String[] TABLES = new String[] {
             "CREATE TABLE usuario(" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
