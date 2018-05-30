@@ -14,15 +14,30 @@ import cl.inacap.herbalifeproject.dto.ProgramaNutricional;
 import cl.inacap.herbalifeproject.dto.Seguimiento;
 import cl.inacap.herbalifeproject.dto.Usuario;
 
+/**
+ * @Author sebastian
+ */
+
 public class HerbalifeDAO {
 
     private Conexion conex;
 
+    /**
+     * Constructor de clase
+     *
+     * @param context
+     */
     public HerbalifeDAO(Context context) {
         conex = new Conexion(context);
     }
 
     // <editor-fold desc="USUARIO">
+
+    /**
+     * permite agregar usuarios a la base de datos
+     * @param u
+     * @return
+     */
     public boolean agregarUsuario(Usuario u) {
         ContentValues values = new ContentValues();
         values.put("nombre", u.getNombre());
@@ -32,6 +47,12 @@ public class HerbalifeDAO {
         return conex.getWritableDatabase().insert("usuario", null, values) != -1;
     }
 
+    /**
+     * permite modificar usuarios de la base de datos
+     * @param id
+     * @param u
+     * @return
+     */
     public boolean modificarUsuario(int id, Usuario u) {
         ContentValues values = new ContentValues();
         values.put("nombre", u.getNombre());
@@ -40,6 +61,12 @@ public class HerbalifeDAO {
         values.put("clave", u.getClave());
         return conex.getWritableDatabase().update("usuario", values, "id = " + id, null) != 0;
     }
+
+    /**
+     *  realiza una busqueda de un usuario especifico por su ID
+     * @param id
+     * @return
+     */
 
     public Usuario buscarUsuario(int id) {
         String sql = "SELECT nombre, username, email, clave FROM usuario WHERE id = " + id;
@@ -50,6 +77,12 @@ public class HerbalifeDAO {
         return new Usuario(id, cursor.getString(0), cursor.getString(1),
                 cursor.getString(2), cursor.getString(3));
     }
+    /**
+     *  realiza una busqueda de un usuario especifico por su nombre de usuario
+     * @param username
+     * @return
+     */
+
 
     public Usuario buscarUsuarioPorUsername(String username) {
         String sql = "SELECT id, nombre, email, clave FROM usuario WHERE username = '" + username + "'";
@@ -61,6 +94,11 @@ public class HerbalifeDAO {
                 username, cursor.getString(2), cursor.getString(3));
     }
 
+    /**
+     * realiza una busqueda de un usuario especifico por su email
+     * @param email
+     * @return
+     */
     public Usuario buscarUsuarioPorEmail(String email) {
         String sql = "SELECT id, nombre, username, clave FROM usuario WHERE email = '" + email + "'";
         Cursor cursor = conex.getReadableDatabase().rawQuery(sql, null);
@@ -71,6 +109,10 @@ public class HerbalifeDAO {
                 cursor.getString(2), email, cursor.getString(3));
     }
 
+    /**
+     * obtiene la lista de usuarios completa de la base de datos
+     * @return
+     */
     public List<Usuario> listarUsuarios() {
         String sql = "SELECT id, nombre, username, email, clave FROM usuario";
         Cursor cursor = conex.getReadableDatabase().rawQuery(sql, null);
@@ -83,12 +125,15 @@ public class HerbalifeDAO {
         return usuarios;
     }
 
-    public boolean eliminarUsuario(int id) {
-        return conex.getWritableDatabase().delete("usuario", "id = " + id, null) != 0;
-    }
     // </editor-fold>
 
     // <editor-fold desc="CLIENTE">
+
+    /**
+     * agrega un cliente
+     * @param c
+     * @return
+     */
     public boolean agregarCliente(Cliente c) {
         ContentValues values = new ContentValues();
         values.put("nombre", c.getNombre());
@@ -229,7 +274,7 @@ public class HerbalifeDAO {
 
     public boolean eliminarPnProducto(int pnId, int productoId) {
         return conex.getWritableDatabase().delete("programa_nutricional_producto", "programa_nutricional_id = " + pnId +
-            " AND producto_id = " + productoId, null) != 0;
+                " AND producto_id = " + productoId, null) != 0;
     }
     // </editor-fold>
 

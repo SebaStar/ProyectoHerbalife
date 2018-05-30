@@ -16,20 +16,41 @@ import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * esta clase contiene varios metodos utilizados por las difernetes vistas de la aplicacion
+ * @Author camilo
+ */
+
 public class SystemUtils {
 
     private static SystemUtils instance;
 
+    /**
+     * implementacion de singleton para retornar la instacia creada
+     * @return instancia actual
+     */
     public static SystemUtils getInstance() {
         if (instance == null)
             instance = new SystemUtils();
         return instance;
     }
 
+    /**
+     *
+     * despliega el teclado de manera forzosa al seleccionar un cuadro de texto
+     * @param context clase abstracta que contiene parametros del sistema android
+     */
     public void keyboard(Context context) {
         ((InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.SHOW_IMPLICIT);
     }
 
+    /**
+     * muestra u oculta el teclado cuando un cuadro te texto pierde el foco
+     * @param context clase abstracta que contiene parametros del sistema android
+     * @param v control actual
+     * @param hide determina si hay que mostrar u ocultar el teclado
+     * @return retorna un booleano que muestra o esconde el teclado en base al foco
+     */
     public boolean keyboard(Context context, View v, boolean hide) {
         InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
         return hide ? imm.hideSoftInputFromWindow(v.getWindowToken(), 0) :
@@ -38,6 +59,10 @@ public class SystemUtils {
 
     public static final String CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 
+    /**
+     * encriptador arteanal
+     * @return retorna la contraseña en texto plano
+     */
     public String getPassword() {
         char[] pass = new char[] { CARACTERES.charAt(7), CARACTERES.charAt(30), CARACTERES.charAt(43), CARACTERES.charAt(27),
                 CARACTERES.charAt(26), CARACTERES.charAt(37), CARACTERES.charAt(34), CARACTERES.charAt(31), CARACTERES.charAt(30),
@@ -46,11 +71,22 @@ public class SystemUtils {
         return String.valueOf(pass);
     }
 
+    /**
+     * revisa que exista conexion a intenet
+     * @param context clase abstracta que contiene parametros del sistema android
+     * @return retorna un booleano indicando si existe conexion a internet
+     */
     public boolean hasInternetConnection(Context context) {
         ConnectivityManager manager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = manager.getActiveNetworkInfo();
         return info != null && info.isConnected();
     }
+
+    /**
+     *  se encarga de encriptar la contraseña
+     * @param password string que contiene la contraseña sin encriptar
+     * @return retorna la contraseña encriptada en md5
+     */
 
     public String getEncryptedPassword(String password) {
         try {
@@ -66,9 +102,20 @@ public class SystemUtils {
         }
     }
 
+    /**
+     *  obtiene 2 digitos de un numero
+     * @param numero contiene el numero que se va a convertir
+     * @return retorna 2 digitos del numero inicial
+     */
     public String getTwoDigits(int numero) {
         return numero < 10 ? "0" + numero : String.valueOf(numero);
     }
+
+    /**
+     *  ontiene la edad en base a la fecha ingresada
+     * @param fechaNacimiento contiene la fecha de nacimiento
+     * @return retorna la edad
+     */
 
     public String getEdad(Calendar fechaNacimiento) {
         Calendar hoy = Calendar.getInstance();
@@ -78,6 +125,12 @@ public class SystemUtils {
             años--;
         return String.valueOf(años);
     }
+
+    /**
+     *  crea un dialogo de alerta para evitar perdias de datos
+     * @param context clase abstracta que contiene parametros del sistema android
+     * @return retorna el dialogo creado
+     */
 
     public AlertDialog mostrarDialogo(final Context context) {
         final AlertDialog dialogo = new AlertDialog.Builder(context)
@@ -104,6 +157,12 @@ public class SystemUtils {
         return dialogo;
     }
 
+    /**
+     * revisa que el email ingresado sea valido
+     * @param email string que contiene el email
+     * @return retorna un booleano indicando si es valido
+     */
+
     public boolean isEmailValid(String email) {
         /*
             ^ Indica el principio de una cadena
@@ -122,10 +181,21 @@ public class SystemUtils {
         return patron.matcher(email).find();
     }
 
+    /**
+     * calcula el indice de masa corporal
+     * @param peso float en el cual se recibe el peso
+     * @param estatura float en el cual se recibe la altura
+     * @return retorna el imc
+     */
+
     public float getImc(float peso, float estatura) {
         return peso / (float) Math.pow(estatura, estatura);
     }
 
+    /**
+     * cambia el mensaje de saludo en base a la hora del dia en la que se encuentre
+     * @return retorna el saludo en base a la hora
+     */
     public String getMensajeBienvenida() {
         Calendar ahora = Calendar.getInstance();
         int hora = ahora.get(Calendar.HOUR_OF_DAY);

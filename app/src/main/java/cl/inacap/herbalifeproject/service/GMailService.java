@@ -11,6 +11,11 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * conexion con el api de gmail
+ * @Author Sebastian
+ */
+
 public class GMailService {
 
     private static final String GMAIL_SMTP_PORT_TLS = "587";
@@ -29,6 +34,14 @@ public class GMailService {
     private Session mailSession;
     private MimeMessage emailMessage;
 
+    /**
+     * costructor de clase
+     * @param fromEmail email de soporte
+     * @param fromPassword contraseña email de soporte
+     * @param toEmailList  lista de email a la cual se enviaran
+     * @param emailSubject asusnto del email de soporte
+     * @param emailBody cuerpo del email de soporte
+     */
     public GMailService(String fromEmail, String fromPassword, List toEmailList, String emailSubject, String emailBody) {
         this.fromEmail = fromEmail;
         this.fromPassword = fromPassword;

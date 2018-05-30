@@ -5,6 +5,11 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ *  clase que realiza la conexion con la base de datos
+ * @Author Sebastian
+ */
+
 public class Conexion extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "herbalife.db";
@@ -39,10 +44,18 @@ public class Conexion extends SQLiteOpenHelper {
                     "usuario_id INTEGER REFERENCES usuario(id));"
     };
 
+    /**
+     *  Establece la conexion con la base de datos local
+     * @param context clase abstracta que contiene parametros del sistema android
+     */
     public Conexion(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * ejecuta sentencias sql definidas anteriormente
+     * @param db base de datos local
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
@@ -54,6 +67,12 @@ public class Conexion extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * metodo necesario en caso de nesesitar actualizar la base de datos , su definicion es obligatoria
+     * @param db base de datos local
+     * @param oldVersion version anterior de la bd
+     * @param newVersion version nueva de la bd
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
