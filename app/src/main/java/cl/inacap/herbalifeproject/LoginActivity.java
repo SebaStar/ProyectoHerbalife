@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -26,7 +26,7 @@ import cl.inacap.herbalifeproject.tasks.SendMailTask;
 import cl.inacap.herbalifeproject.utils.Preferences;
 import cl.inacap.herbalifeproject.utils.SystemUtils;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements TextWatcher, View.OnFocusChangeListener {
 
     EditText usernameTxt, passwordTxt;
     Button loginBtn, registerBtn, forgotBtn;
@@ -66,52 +66,10 @@ public class LoginActivity extends AppCompatActivity {
         hdao = new HerbalifeDAO(context);
         r = new Random();
 
-        usernameTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
-            }
-        });
-        usernameTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                loginBtn.setEnabled(s.length() > 0 && passwordTxt.getText().toString().trim().length() > 0);
-                loginBtn.setTextColor(loginBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
-            }
-        });
-        passwordTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
-            }
-        });
-        passwordTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                loginBtn.setEnabled(s.length() > 0 && usernameTxt.getText().toString().trim().length() > 0);
-                loginBtn.setTextColor(loginBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
-            }
-        });
+        usernameTxt.setOnFocusChangeListener(this);
+        usernameTxt.addTextChangedListener(this);
+        passwordTxt.setOnFocusChangeListener(this);
+        passwordTxt.addTextChangedListener(this);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,12 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 aceptarBtn = dialog.findViewById(R.id.dem_aceptarBtn);
                 cancelarBtn = dialog.findViewById(R.id.dem_cancelarBtn);
 
-                emailParaTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        SystemUtils.getInstance().keyboard(context, v, !hasFocus);
-                    }
-                });
+                emailParaTxt.setOnFocusChangeListener(LoginActivity.this);
                 emailParaTxt.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -215,5 +168,26 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        loginBtn.setEnabled(!usernameTxt.getText().toString().trim().isEmpty() && !passwordTxt.getText().toString().trim().isEmpty());
+        loginBtn.setTextColor(loginBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        SystemUtils.getInstance().keyboard(context, v, !hasFocus);
     }
 }

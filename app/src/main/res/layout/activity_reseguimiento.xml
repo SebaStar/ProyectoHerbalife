@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="cl.inacap.herbalifeproject.RESeguimientoActivity">
 
-    <include android:id="@+id/reseguimiento_toolbar"
-        layout="@layout/custom_toolbar_back" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/reseguimiento_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:navigationIcon="?attr/homeAsUpIndicator">
+
+        <include layout="@layout/layout_custom_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="35dp" />
+
+    </android.support.v7.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="15dp">
 
             <TextView
@@ -46,10 +61,10 @@
                     android:id="@+id/reseguimiento_peso"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="0.5"
                     android:background="@drawable/custom_edit_text"
                     android:hint="Peso (Kg)"
-                    android:layout_marginEnd="5dp"
                     android:imeOptions="actionNext"
                     android:inputType="numberDecimal"
                     android:padding="12dp" />
@@ -77,10 +92,10 @@
                     android:id="@+id/reseguimiento_osea"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="0.5"
                     android:background="@drawable/custom_edit_text"
                     android:hint="Masa osea (%)"
-                    android:layout_marginEnd="5dp"
                     android:imeOptions="actionNext"
                     android:inputType="numberDecimal"
                     android:padding="12dp" />
@@ -108,24 +123,24 @@
                     android:id="@+id/reseguimiento_muscular"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="0.5"
                     android:background="@drawable/custom_edit_text"
                     android:hint="Masa muscular (%)"
-                    android:layout_marginEnd="5dp"
                     android:imeOptions="actionNext"
                     android:inputType="numberDecimal"
                     android:padding="12dp" />
 
-                <cl.inacap.herbalifeproject.view.ClearableEditText
+                <TextView
                     android:id="@+id/reseguimiento_imc"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:background="@drawable/custom_edit_text"
                     android:hint="IMC"
-                    android:imeOptions="actionNext"
-                    android:inputType="numberDecimal"
-                    android:padding="12dp" />
+                    android:padding="12dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -139,10 +154,10 @@
                     android:id="@+id/reseguimiento_bmr"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="0.5"
                     android:background="@drawable/custom_edit_text"
                     android:hint="BMR (Kcal)"
-                    android:layout_marginEnd="5dp"
                     android:imeOptions="actionNext"
                     android:inputType="numberDecimal"
                     android:padding="12dp" />
@@ -170,10 +185,10 @@
                     android:id="@+id/reseguimiento_viceral"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="0.5"
                     android:background="@drawable/custom_edit_text"
                     android:hint="Grasa viceral (%)"
-                    android:layout_marginEnd="5dp"
                     android:imeOptions="actionNext"
                     android:inputType="numberDecimal"
                     android:padding="12dp" />
@@ -185,7 +200,7 @@
                     android:layout_weight="0.5"
                     android:background="@drawable/custom_edit_text"
                     android:hint="Cintura (cm)"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
                     android:padding="12dp" />
 

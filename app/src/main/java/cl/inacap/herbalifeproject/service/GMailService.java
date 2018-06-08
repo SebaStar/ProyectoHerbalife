@@ -12,8 +12,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 /**
- * conexion con el api de gmail
- * @Author Sebastian
+ * Conexión con el API de GMail.
+ * @author Sebastián
  */
 
 public class GMailService {
@@ -35,12 +35,12 @@ public class GMailService {
     private MimeMessage emailMessage;
 
     /**
-     * costructor de clase
-     * @param fromEmail email de soporte
-     * @param fromPassword contraseña email de soporte
-     * @param toEmailList  lista de email a la cual se enviaran
-     * @param emailSubject asusnto del email de soporte
-     * @param emailBody cuerpo del email de soporte
+     * Costructor de la clase.
+     * @param fromEmail Email de soporte.
+     * @param fromPassword Contraseña email de soporte.
+     * @param toEmailList  Listado de emails a la cual se enviarán.
+     * @param emailSubject Asusnto del email de soporte.
+     * @param emailBody Cuerpo del email de soporte.
      */
     public GMailService(String fromEmail, String fromPassword, List toEmailList, String emailSubject, String emailBody) {
         this.fromEmail = fromEmail;
@@ -57,7 +57,13 @@ public class GMailService {
         emailProperties.put("mail.smtp.timeout", TIMEOUT);
     }
 
-    public MimeMessage createEmailMessage() throws MessagingException, UnsupportedEncodingException {
+    /**
+     *
+     * @return
+     * @throws MessagingException
+     * @throws UnsupportedEncodingException
+     */
+    public void createEmailMessage() throws MessagingException, UnsupportedEncodingException {
         mailSession = Session.getDefaultInstance(emailProperties, null);
         emailMessage = new MimeMessage(mailSession);
 
@@ -67,9 +73,12 @@ public class GMailService {
         }
         emailMessage.setSubject(emailSubject);
         emailMessage.setContent(emailBody, "text/html");
-        return emailMessage;
     }
 
+    /**
+     *
+     * @throws MessagingException
+     */
     public void sendEmail() throws MessagingException {
         Transport transport = mailSession.getTransport("smtp");
         transport.connect(EMAIL_HOST, fromEmail, fromPassword);

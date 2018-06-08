@@ -3,7 +3,6 @@ package cl.inacap.herbalifeproject.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -200,6 +199,15 @@ public class HerbalifeDAO {
     public boolean eliminarProducto(int id) {
         return conex.getWritableDatabase().delete("producto", "id = " + id, null) != 0;
     }
+
+    public int getUltimoIdDeProducto() {
+        String sql = "SELECT max(id) FROM producto";
+        Cursor cursor = conex.getReadableDatabase().rawQuery(sql, null);
+        if (cursor.getCount() == 0)
+            return 0;
+        cursor.moveToNext();
+        return cursor.getInt(0);
+    }
     // </editor-fold>
 
     // <editor-fold desc="PROGRAMA NUTRICIONAL">
@@ -260,11 +268,11 @@ public class HerbalifeDAO {
         return conex.getWritableDatabase().insert("programa_nutricional_producto", null, values) != -1;
     }
 
-    public List<Producto> listarProductos(int pnId) {
+    public ArrayList<Producto> listarProductos(int pnId) {
         String sql = "SELECT p.id, p.nombre, p.cantidad, pnp.programa_nutricional_id, pnp.producto_id " +
                 "FROM programa_nutricional_producto pnp, producto p WHERE pnp.programa_nutricional_id = " + pnId + " AND p.id = pnp.producto_id";
         Cursor cursor = conex.getReadableDatabase().rawQuery(sql, null);
-        List<Producto> productos = new ArrayList<>();
+        ArrayList<Producto> productos = new ArrayList<>();
         while (cursor.moveToNext()) {
             productos.add(new Producto(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2)));
         }
@@ -287,7 +295,7 @@ public class HerbalifeDAO {
         values.put("osea", s.getOsea());
         values.put("agua", s.getAgua());
         values.put("muscular", s.getMuscular());
-        values.put("brm", s.getBrm());
+        values.put("bmr", s.getBmr());
         values.put("edad_metabolica", s.getEdadMetabolica());
         values.put("grasa_viceral", s.getGrasaViceral());
         values.put("cintura", s.getCintura());
@@ -304,7 +312,7 @@ public class HerbalifeDAO {
         values.put("osea", s.getOsea());
         values.put("agua", s.getAgua());
         values.put("muscular", s.getMuscular());
-        values.put("brm", s.getBrm());
+        values.put("bmr", s.getBmr());
         values.put("edad_metabolica", s.getEdadMetabolica());
         values.put("grasa_viceral", s.getGrasaViceral());
         values.put("cintura", s.getCintura());
@@ -314,7 +322,7 @@ public class HerbalifeDAO {
     }
 
     public Seguimiento buscarSeguimiento(int id) {
-        String sql = "SELECT fecha, peso, grasa_total, osea, agua, muscular, brm, edad_metabolica, grasa_viceral, cintura, cliente_id, usuario_id " +
+        String sql = "SELECT fecha, peso, grasa_total, osea, agua, muscular, bmr, edad_metabolica, grasa_viceral, cintura, cliente_id, usuario_id " +
                 "FROM seguimiento WHERE id = " + id;
         Cursor cursor = conex.getReadableDatabase().rawQuery(sql, null);
         if (cursor.getCount() == 0)
@@ -326,7 +334,7 @@ public class HerbalifeDAO {
     }
 
     public List<Seguimiento> listarSeguimientos(int clienteId, int usuarioId) {
-        String sql = "SELECT id, fecha, peso, grasa_total, osea, agua, muscular, brm, edad_metabolica, grasa_viceral, cintura " +
+        String sql = "SELECT id, fecha, peso, grasa_total, osea, agua, muscular, bmr, edad_metabolica, grasa_viceral, cintura " +
                 "FROM seguimiento WHERE cliente_id = " + clienteId + " AND usuario_id = " + usuarioId;
         Cursor cursor = conex.getReadableDatabase().rawQuery(sql, null);
         List<Seguimiento> seguimientos = new ArrayList<>();

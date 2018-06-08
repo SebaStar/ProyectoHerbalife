@@ -17,9 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import cl.inacap.herbalifeproject.adapter.ProductoAdapter;
 import cl.inacap.herbalifeproject.dto.Producto;
@@ -80,32 +78,18 @@ public class LProductosActivity extends AppCompatActivity {
                 dialog.setCancelable(false);
 
                 final TextView productoTv = dialog.findViewById(R.id.dap_nombreProductoTv);
+                productoTv.requestFocus();
                 productoTv.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
-                        new AlertDialog.Builder(context).setTitle("Productos")
-                                .setSingleChoiceItems(productosLista, -1, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        productoTv.setText(productosLista[which]);
-                                        index = which;
-                                        dialog.dismiss();
-                                    }
-                                }).setCancelable(true).create().show();
+                        if (hasFocus)
+                            getDialog(productoTv).show();
                     }
                 });
                 productoTv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new AlertDialog.Builder(context).setTitle("Productos")
-                                .setSingleChoiceItems(productosLista, -1, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        productoTv.setText(productosLista[which]);
-                                        index = which;
-                                        dialog.dismiss();
-                                    }
-                                }).setCancelable(true).create().show();
+                        getDialog(productoTv).show();
                     }
                 });
                 final EditText cantidadTxt = dialog.findViewById(R.id.dap_cantidadTxt);
@@ -165,5 +149,17 @@ public class LProductosActivity extends AppCompatActivity {
             listadoProductos.setVisibility(View.VISIBLE);
             vacioTv.setVisibility(View.GONE);
         }
+    }
+
+    private AlertDialog getDialog(final TextView productoTv) {
+        return new AlertDialog.Builder(context).setTitle("Productos")
+                .setSingleChoiceItems(productosLista, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        productoTv.setText(productosLista[which]);
+                        index = which;
+                        dialog.dismiss();
+                    }
+                }).setCancelable(true).create();
     }
 }

@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="cl.inacap.herbalifeproject.REProgramaNuticionalActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <include
+        android:id="@+id/reprograma_toolbar"
+        layout="@layout/custom_toolbar_back" />
 
-        <include
-            android:id="@+id/reprograma_toolbar"
-            layout="@layout/custom_toolbar_back" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/reprograma_toolbar"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="15dp">
 
@@ -27,6 +26,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_edit_text"
                 android:hint="Nombre del programa"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
                 android:padding="12dp" />
 
             <cl.inacap.herbalifeproject.view.ClearableEditText
@@ -36,6 +37,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/custom_edit_text"
                 android:hint="Duración"
+                android:imeOptions="actionDone"
+                android:inputType="number"
                 android:padding="12dp" />
 
             <LinearLayout
@@ -65,17 +68,19 @@
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/reprograma_registrarEditarBtn"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custom_button"
+                android:enabled="false"
+                android:text="Registrar/Editar"
+                android:textColor="#6F6F6F" />
+
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/reprograma_fabAgregar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="15dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_done" />
-
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

@@ -1,22 +1,14 @@
 package cl.inacap.herbalifeproject;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,6 +26,7 @@ public class HSeguimientoActivity extends AppCompatActivity {
     Toolbar toolbar;
     ViewPager container;
     TextView tituloTv, clienteTv, vacioTv;
+    FloatingActionButton fabEditar;
 
     List<Fragment> fragments = new ArrayList<>();
     List<Seguimiento> seguimientos = new ArrayList<>();
@@ -55,6 +48,7 @@ public class HSeguimientoActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.hseguimiento_toolbar);
         container = findViewById(R.id.hseguimiento_container);
         vacioTv = findViewById(R.id.hseguimiento_vacio);
+        fabEditar = findViewById(R.id.hseguimiento_fabEditar);
         tituloTv = toolbar.findViewById(R.id.toolbar_title);
         clienteTv = toolbar.findViewById(R.id.toolbar_username);
 
@@ -77,6 +71,16 @@ public class HSeguimientoActivity extends AppCompatActivity {
             container.setVisibility(View.VISIBLE);
             vacioTv.setVisibility(View.GONE);
         }
+        fabEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, RESeguimientoActivity.class);
+                i.putExtra(Solicitud.MODO_ID, 1);
+                i.putExtra(Solicitud.CLIENTE_ID, cliente.getId());
+                i.putExtra(Solicitud.SEGUIMIENTO_ID, seguimientos.get(container.getCurrentItem()).getId());
+                startActivity(i);
+            }
+        });
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

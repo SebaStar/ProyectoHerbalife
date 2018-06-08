@@ -9,14 +9,14 @@ public class Seguimiento {
     private float osea;
     private float agua;
     private float muscular;
-    private float brm;
+    private float bmr;
     private int edadMetabolica;
     private float grasaViceral;
     private float cintura;
     private int clienteId;
     private int usuarioId;
 
-    public Seguimiento(int id, String fecha, float peso, float grasaTotal, float osea, float agua, float muscular, float brm, int edadMetabolica, float grasaViceral, float cintura, int clienteId, int usuarioId) {
+    public Seguimiento(int id, String fecha, float peso, float grasaTotal, float osea, float agua, float muscular, float bmr, int edadMetabolica, float grasaViceral, float cintura, int clienteId, int usuarioId) {
         this.id = id;
         this.fecha = fecha;
         this.peso = peso;
@@ -24,7 +24,7 @@ public class Seguimiento {
         this.osea = osea;
         this.agua = agua;
         this.muscular = muscular;
-        this.brm = brm;
+        this.bmr = bmr;
         this.edadMetabolica = edadMetabolica;
         this.grasaViceral = grasaViceral;
         this.cintura = cintura;
@@ -32,14 +32,14 @@ public class Seguimiento {
         this.usuarioId = usuarioId;
     }
 
-    public Seguimiento(String fecha, float peso, float grasaTotal, float osea, float agua, float muscular, float brm, int edadMetabolica, float grasaViceral, float cintura, int clienteId, int usuarioId) {
+    public Seguimiento(String fecha, float peso, float grasaTotal, float osea, float agua, float muscular, float bmr, int edadMetabolica, float grasaViceral, float cintura, int clienteId, int usuarioId) {
         this.fecha = fecha;
         this.peso = peso;
         this.grasaTotal = grasaTotal;
         this.osea = osea;
         this.agua = agua;
         this.muscular = muscular;
-        this.brm = brm;
+        this.bmr = bmr;
         this.edadMetabolica = edadMetabolica;
         this.grasaViceral = grasaViceral;
         this.cintura = cintura;
@@ -75,8 +75,8 @@ public class Seguimiento {
         return muscular;
     }
 
-    public float getBrm() {
-        return brm;
+    public float getBmr() {
+        return bmr;
     }
 
     public int getEdadMetabolica() {

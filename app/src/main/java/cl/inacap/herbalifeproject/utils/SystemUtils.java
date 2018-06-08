@@ -13,7 +13,6 @@ import android.view.inputmethod.InputMethodManager;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -177,7 +176,7 @@ public class SystemUtils {
             \ Para escribir un caracter especial como los anteriores y que sea tratado como un literal
             | Para indicar una disyunción lógica (para elegir entre dos valores: a|b se tiene que cumplir al menos uno de los dos)
          */
-        Pattern patron = Pattern.compile("^[_a-z0-9-]+(-[_a-z0-9])*@[a-z]+(\\.[a-z]{2,})$");
+        Pattern patron = Pattern.compile("^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,3}$", Pattern.CASE_INSENSITIVE);
         return patron.matcher(email).find();
     }
 
@@ -189,7 +188,7 @@ public class SystemUtils {
      */
 
     public float getImc(float peso, float estatura) {
-        return peso / (float) Math.pow(estatura, estatura);
+        return Math.round((peso / (estatura * estatura)) * 100.0f) / 100.0f;
     }
 
     /**

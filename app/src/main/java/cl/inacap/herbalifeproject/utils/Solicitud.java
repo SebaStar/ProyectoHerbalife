@@ -4,6 +4,7 @@ public class Solicitud {
 
     public static final String CLIENTE_ID = "cliente_id";
     public static final String SEGUIMIENTO_ID = "seguimiento_id";
+    public static final String PROGRAMA_NUTRICIONAL_ID = "programa_id";
 
     public static final String MODO_ID = "modo_id";
     public static final String PRODUCTOS = "productos";

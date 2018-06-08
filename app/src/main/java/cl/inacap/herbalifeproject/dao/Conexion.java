@@ -20,32 +20,32 @@ public class Conexion extends SQLiteOpenHelper {
     private static final String[] TABLES = new String[] {
             "CREATE TABLE usuario(" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "nombre TEXT, username TEXT, email TEXT, clave TEXT);",
+                    "nombre TEXT NOT NULL, username TEXT NOT NULL, email TEXT NOT NULL, clave TEXT NOT NULL);",
             "CREATE TABLE producto(" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "nombre INTEGER, cantidad INTEGER);",
+                    "nombre INTEGER NOT NULL, cantidad INTEGER NOT NULL);",
             "CREATE TABLE programa_nutricional(" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "nombre TEXT, duracion INTEGER);",
+                    "nombre TEXT NOT NULL, duracion INTEGER NOT NULL);",
             "CREATE TABLE programa_nutricional_producto(" +
                     "programa_nutricional_id INTEGER REFERENCES programa_nutricional(id), " +
                     "producto_id INTEGER REFERENCES producto(id));",
             "CREATE TABLE cliente(" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "nombre TEXT, telefono TEXT, fecha_nacimiento TEXT, ciudad INTEGER, " +
-                    "altura REAL, complexion INTEGER, " +
+                    "nombre TEXT NOT NULL, telefono TEXT NOT NULL, fecha_nacimiento TEXT NOT NULL, ciudad INTEGER NOT NULL, " +
+                    "altura REAL NOT NULL, complexion INTEGER NOT NULL, " +
                     "usuario_id INTEGER REFERENCES usuario(id), " +
                     "programa_nutricional_id INTEGER REFERENCES programa_nutricional(id));",
             "CREATE TABLE seguimiento(" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "fecha TEXT, peso REAL, grasa_total REAL, osea REAL, agua REAL, " +
-                    "muscular REAL, brm REAL, edad_metabolica INTEGER, grasa_viceral REAL, " +
-                    "cintura REAL, cliente_id INTEGER REFERENCES cliente(id), " +
+                    "fecha TEXT NOT NULL, peso REAL NOT NULL, grasa_total REAL NOT NULL, osea REAL NOT NULL, agua REAL NOT NULL, " +
+                    "muscular REAL NOT NULL, bmr REAL NOT NULL, edad_metabolica INTEGER NOT NULL, grasa_viceral REAL NOT NULL, " +
+                    "cintura REAL NOT NULL, cliente_id INTEGER REFERENCES cliente(id), " +
                     "usuario_id INTEGER REFERENCES usuario(id));"
     };
 
     /**
-     *  Establece la conexion con la base de datos local
+     * Establece la conexion con la base de datos local
      * @param context clase abstracta que contiene parametros del sistema android
      */
     public Conexion(Context context) {

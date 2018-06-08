@@ -51,14 +51,14 @@ public class HSeguimientoFragment extends Fragment {
         cinturaTv = v.findViewById(R.id.hseguimiento_cintura);
 
         fechaTv.setText(s.getFecha());
-        pesoTv.setText("Peso: " + s.getPeso() + " Kg");
+        pesoTv.setText(s.getPeso() + " Kg");
         grasaTotalTv.setText(s.getGrasaTotal() + "%");
         masaOseaTv.setText(s.getOsea() + "%");
         aguaTv.setText(s.getAgua() + "%");
         masaMuscularTv.setText(s.getMuscular() + "%");
         imcTv.setText(SystemUtils.getInstance().getImc(s.getPeso(), c.getAltura()) + " Kg/m²");
         edadMetabolicaTv.setText(s.getEdadMetabolica() + " años");
-        bmrTv.setText(s.getBrm() + " Kcal");
+        bmrTv.setText(s.getBmr() + " Kcal");
         grasaViceralTv.setText(s.getGrasaViceral() + "%");
         cinturaTv.setText(s.getCintura() + " cm");
     }

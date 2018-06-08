@@ -1,11 +1,9 @@
 package cl.inacap.herbalifeproject;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -17,7 +15,7 @@ import cl.inacap.herbalifeproject.dao.HerbalifeDAO;
 import cl.inacap.herbalifeproject.dto.Usuario;
 import cl.inacap.herbalifeproject.utils.SystemUtils;
 
-public class RegistroActivity extends AppCompatActivity {
+public class RegistroActivity extends AppCompatActivity implements TextWatcher, View.OnFocusChangeListener {
 
     EditText nombreTxt, usernameTxt, passwordTxt, repeatPasswordTxt, emailTxt;
     Button registrarseBtn;
@@ -45,159 +43,42 @@ public class RegistroActivity extends AppCompatActivity {
 
         hdao = new HerbalifeDAO(context);
 
-        nombreTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        nombreTxt.addTextChangedListener(this);
+        usernameTxt.addTextChangedListener(this);
+        passwordTxt.addTextChangedListener(this);
+        repeatPasswordTxt.addTextChangedListener(this);
+        emailTxt.addTextChangedListener(this);
 
-            }
+        nombreTxt.setOnFocusChangeListener(this);
+        usernameTxt.setOnFocusChangeListener(this);
+        passwordTxt.setOnFocusChangeListener(this);
+        repeatPasswordTxt.setOnFocusChangeListener(this);
+        emailTxt.setOnFocusChangeListener(this);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                registrarseBtn.setEnabled(s.toString().trim().length() > 0 && usernameTxt.getText().toString().trim().length() > 0 &&
-                        passwordTxt.getText().toString().trim().length() > 0 && repeatPasswordTxt.getText().toString().trim().length() > 0 &&
-                        emailTxt.getText().toString().trim().length() > 0);
-                registrarseBtn.setTextColor(registrarseBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
-            }
-        });
-        usernameTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                registrarseBtn.setEnabled(s.toString().trim().length() > 0 && nombreTxt.getText().toString().trim().length() > 0 &&
-                        passwordTxt.getText().toString().trim().length() > 0 && repeatPasswordTxt.getText().toString().trim().length() > 0 &&
-                        emailTxt.getText().toString().trim().length() > 0);
-                registrarseBtn.setTextColor(registrarseBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
-            }
-        });
-        passwordTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                registrarseBtn.setEnabled(s.toString().trim().length() > 0 && usernameTxt.getText().toString().trim().length() > 0 &&
-                        nombreTxt.getText().toString().trim().length() > 0 && repeatPasswordTxt.getText().toString().trim().length() > 0 &&
-                        emailTxt.getText().toString().trim().length() > 0);
-                registrarseBtn.setTextColor(registrarseBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
-            }
-        });
-        repeatPasswordTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                registrarseBtn.setEnabled(s.toString().trim().length() > 0 && usernameTxt.getText().toString().trim().length() > 0 &&
-                        passwordTxt.getText().toString().trim().length() > 0 && nombreTxt.getText().toString().trim().length() > 0 &&
-                        emailTxt.getText().toString().trim().length() > 0);
-                registrarseBtn.setTextColor(registrarseBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
-            }
-        });
-        emailTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                registrarseBtn.setEnabled(s.toString().trim().length() > 0 && usernameTxt.getText().toString().trim().length() > 0 &&
-                        passwordTxt.getText().toString().trim().length() > 0 && repeatPasswordTxt.getText().toString().trim().length() > 0 &&
-                        nombreTxt.getText().toString().trim().length() > 0);
-                registrarseBtn.setTextColor(registrarseBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
-            }
-        });
-
-        nombreTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
-            }
-        });
-        usernameTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
-            }
-        });
-        passwordTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
-            }
-        });
-        repeatPasswordTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
-            }
-        });
-        emailTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
-            }
-        });
-
-        // REVISAR
         registrarseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SystemUtils.getInstance().keyboard(context, v, true);
                 String pass = passwordTxt.getText().toString().trim(), rPass = repeatPasswordTxt.getText().toString().trim(),
                         username = usernameTxt.getText().toString().trim(), email = emailTxt.getText().toString().trim();
-
                 String errorUsername = null, errorPass = null, errorRepetirPass = null, errorEmail = null;
                 usuario = hdao.buscarUsuarioPorUsername(username);
                 usuarioMail = hdao.buscarUsuarioPorEmail(email);
                 if (usuario == null && usuarioMail == null) {
                     if (pass.length() < 8)
-                        errorPass = "La contraseña debe tener al menos 8 caracteres";
+                        errorPass = "La contraseña debe tener al menos 8 caracteres.";
                     else {
-                        if (!pass.equals(rPass))
-                            errorRepetirPass = "Las contraseñas no coinciden";
+                        if (!pass.equals(rPass) || !SystemUtils.getInstance().isEmailValid(email)) {
+                            errorRepetirPass = pass.equals(rPass) ? null : "Las contraseñas no coinciden.";
+                            errorEmail = SystemUtils.getInstance().isEmailValid(email) ? null : "Formato de email no válido.";
+                        }
                         else {
-                            if (hdao.agregarUsuario(new Usuario(nombreTxt.getText().toString(), username, email, SystemUtils.getInstance().getEncryptedPassword(pass)))) {
+                            if (hdao.agregarUsuario(new Usuario(nombreTxt.getText().toString(), username, email, SystemUtils.getInstance().getEncryptedPassword(pass))))
                                 Toast.makeText(context, "¡Registrado con éxito!", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
                             else
                                 Toast.makeText(context, "No se pudo registrar el usuario al sistema.", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
-                        errorEmail = SystemUtils.getInstance().isEmailValid(email) ? null : "Formato de email no válido.";
                     }
                 } else {
                     errorUsername = usuario != null ? "Este nombre de usuario está registrado" : null;
@@ -214,5 +95,28 @@ public class RegistroActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         SystemUtils.getInstance().mostrarDialogo(context).show();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        registrarseBtn.setEnabled(!nombreTxt.getText().toString().trim().isEmpty() && !usernameTxt.getText().toString().trim().isEmpty() &&
+                !passwordTxt.getText().toString().trim().isEmpty() && !repeatPasswordTxt.getText().toString().trim().isEmpty() &&
+                !emailTxt.getText().toString().trim().isEmpty());
+        registrarseBtn.setTextColor(registrarseBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        SystemUtils.getInstance().keyboard(context, v, !hasFocus);
     }
 }

@@ -26,16 +26,24 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         this.listener = listener;
     }
 
+    public ProductoAdapter(List<Producto> productos, Context context) {
+        this.productos = productos;
+        this.context = context;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(R.layout.layout_listar_productos, parent, false);
-        return new ViewHolder(v, listener);
+        View v = inflater.inflate(listener != null ? R.layout.layout_listar_productos : R.layout.layout_listar_productos_2, parent, false);
+        return listener != null ? new ViewHolder(v, listener) : new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bindProducto(productos.get(position), position);
+        if (listener != null)
+            holder.bindProducto(productos.get(position), position);
+        else
+            holder.bindProducto(productos.get(position));
     }
 
     @Override
@@ -65,6 +73,13 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
 
         String[] productosStr;
 
+        public ViewHolder(View v) {
+            super(v);
+            productoTv = v.findViewById(R.id.lp_producto);
+            cantidadTv = v.findViewById(R.id.lp_cantidad);
+            productosStr = v.getContext().getResources().getStringArray(R.array.productos);
+        }
+
         public ViewHolder(View v, OnRemoveRowClickListener clickListener) {
             super(v);
             this.clickListener = clickListener;
@@ -72,6 +87,11 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
             cantidadTv = v.findViewById(R.id.lp_cantidad);
             eliminarBtn = v.findViewById(R.id.lp_eliminar);
             productosStr = v.getContext().getResources().getStringArray(R.array.productos);
+        }
+
+        public void bindProducto(Producto p) {
+            productoTv.setText(productosStr[p.getNombre()]);
+            cantidadTv.setText(String.valueOf(p.getCantidad()));
         }
 
         public void bindProducto(Producto p, final int position) {

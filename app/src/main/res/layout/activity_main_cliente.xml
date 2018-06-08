@@ -15,8 +15,6 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:layout_collapseMode="pin"
-        app:layout_scrollFlags="scroll|enterAlways"
         app:navigationIcon="?attr/homeAsUpIndicator">
 
         <include layout="@layout/layout_custom_toolbar"

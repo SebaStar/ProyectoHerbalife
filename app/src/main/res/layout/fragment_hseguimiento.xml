@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="15dp"
+        android:paddingTop="20dp"
         android:text="00/00/0000"
         android:textColor="@android:color/black"
         android:textSize="20sp" />
@@ -350,7 +350,7 @@
 
                     <TextView
                         android:text="Contorno cintura:"
-                        android:textSize="16sp"
+                        android:textSize="15sp"
                         android:textColor="@android:color/black"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

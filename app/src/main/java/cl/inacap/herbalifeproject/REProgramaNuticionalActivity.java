@@ -1,15 +1,10 @@
 package cl.inacap.herbalifeproject;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,26 +14,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
-import cl.inacap.herbalifeproject.adapter.ProductoAdapter;
 import cl.inacap.herbalifeproject.dao.HerbalifeDAO;
 import cl.inacap.herbalifeproject.dto.Producto;
 import cl.inacap.herbalifeproject.dto.ProgramaNutricional;
-import cl.inacap.herbalifeproject.interfaces.Listeners;
 import cl.inacap.herbalifeproject.utils.Solicitud;
 import cl.inacap.herbalifeproject.utils.SystemUtils;
-import cl.inacap.herbalifeproject.view.ClearableEditText;
 
-public class REProgramaNuticionalActivity extends AppCompatActivity {
+public class REProgramaNuticionalActivity extends AppCompatActivity implements TextWatcher, View.OnFocusChangeListener {
 
     Toolbar toolbar;
     EditText nombreTxt, duracionTxt;
     TextView cantidadTv;
-    Button revisarBtn;
-    FloatingActionButton aceptarBtn;
+    Button revisarBtn, registrarEditarBtn;
 
     ArrayList<Producto> productos = new ArrayList<>();
     HerbalifeDAO hdao;
@@ -59,25 +48,28 @@ public class REProgramaNuticionalActivity extends AppCompatActivity {
         duracionTxt = findViewById(R.id.reprograma_duracionTxt);
         cantidadTv = findViewById(R.id.reprograma_cantidadTv);
         revisarBtn = findViewById(R.id.reprograma_revisarBtn);
-        aceptarBtn = findViewById(R.id.reprograma_fabAgregar);
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Agregar programa nutricional");
+        registrarEditarBtn = findViewById(R.id.reprograma_registrarEditarBtn);
 
         hdao = new HerbalifeDAO(context);
+        final int modo = getIntent().getIntExtra(Solicitud.MODO_ID, 0);
 
-        nombreTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
-            }
-        });
-        duracionTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
-            }
-        });
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(modo == 0 ? "Registrar programa nutricional" : "Editar programa nutricional");
+
+        if (modo == 1) {
+            ProgramaNutricional pn = hdao.buscarProgramaNutricional(getIntent().getIntExtra(Solicitud.PROGRAMA_NUTRICIONAL_ID, 0));
+            productos = hdao.listarProductos(pn.getId());
+            nombreTxt.setText(pn.getNombre());
+            duracionTxt.setText(String.valueOf(pn.getDuracion()));
+            registrarEditarBtn.setEnabled(true);
+            registrarEditarBtn.setTextColor(Color.WHITE);
+        }
+        registrarEditarBtn.setText(modo == 0 ? "Registrar" : "Editar");
+        nombreTxt.addTextChangedListener(this);
+        duracionTxt.addTextChangedListener(this);
+
+        nombreTxt.setOnFocusChangeListener(this);
+        duracionTxt.setOnFocusChangeListener(this);
 
         revisarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,34 +81,30 @@ public class REProgramaNuticionalActivity extends AppCompatActivity {
                 startActivityForResult(i, Solicitud.CODIGO_LISTADO_PRODUCTOS);
             }
         });
-        aceptarBtn.setOnClickListener(new View.OnClickListener() {
+        registrarEditarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nombre = nombreTxt.getText().toString().trim(), duracion = duracionTxt.getText().toString().trim(),
-                        nombreError = null, duracionError = null, productosError = null;
+                String nombre = nombreTxt.getText().toString().trim(), duracion = duracionTxt.getText().toString().trim();
 
-                if (nombre.isEmpty() || duracion.isEmpty() || productos.isEmpty()) {
-                    nombreError = nombre.isEmpty() ? "Campo requerido" : null;
-                    duracionError = duracion.isEmpty() ? "Campo requerido" : null;
-                    productosError = productos.isEmpty() ? "El programa nutricional debe tener al menos un producto." : null;
-                } else {
+                if (modo == 0) {
                     if (hdao.agregarProgramaNutricional(new ProgramaNutricional(nombre, Integer.parseInt(duracion)))) {
-                        int ultimoId = hdao.getUltimoIdDeProgramaNutricional();
-
-                        for (Producto p : productos) {
-                            if (hdao.agregarProducto(p)) {
-                                hdao.agregarPnProducto(ultimoId, p.getId());
-                            } else break;
-                        }
+                        agregarEliminarProductos(true, hdao.getUltimoIdDeProgramaNutricional());
                         Toast.makeText(context, "El programa nutricional se agregó correctamente.", Toast.LENGTH_SHORT).show();
-                    } else
+                    }
+                    else
                         Toast.makeText(context, "No se pudo agregar el programa nutricional.", Toast.LENGTH_SHORT).show();
-                    finish();
                 }
-                nombreTxt.setError(nombreError);
-                duracionTxt.setError(duracionError);
-                if (productosError != null)
-                    Snackbar.make(v, productosError, Snackbar.LENGTH_SHORT);
+                else {
+                    int id = getIntent().getIntExtra(Solicitud.PROGRAMA_NUTRICIONAL_ID, 0);
+                    if (hdao.modificarProgramaNutricional(id, new ProgramaNutricional(nombre, Integer.parseInt(duracion)))) {
+                        if (agregarEliminarProductos(false, id))
+                            agregarEliminarProductos(true, id);
+                        Toast.makeText(context, "El programa nutricional se modificó correctamente.", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                        Toast.makeText(context, "No se pudo modificar el programa nutricional.", Toast.LENGTH_SHORT).show();
+                }
+                finish();
             }
         });
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -125,6 +113,25 @@ public class REProgramaNuticionalActivity extends AppCompatActivity {
                 SystemUtils.getInstance().mostrarDialogo(context).show();
             }
         });
+    }
+
+    private boolean agregarEliminarProductos(boolean agregar, int id) {
+        for (Producto p : productos) {
+            if (agregar) {
+                if (hdao.agregarProducto(p)) {
+                    int productoId = hdao.getUltimoIdDeProducto();
+                    if (!hdao.agregarPnProducto(id, productoId))
+                        return false;
+                }
+            }
+            else {
+                if (hdao.eliminarPnProducto(id, p.getId())) {
+                    if (!hdao.eliminarProducto(p.getId()))
+                        return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
@@ -137,10 +144,37 @@ public class REProgramaNuticionalActivity extends AppCompatActivity {
         if (requestCode == Solicitud.CODIGO_LISTADO_PRODUCTOS) {
             if (data != null && resultCode == Solicitud.RESULTADO_OK) {
                 Bundle extras = data.getExtras();
-                productos = (ArrayList<Producto>)extras.getSerializable(Solicitud.PRODUCTOS);
+                productos = (ArrayList<Producto>) extras.getSerializable(Solicitud.PRODUCTOS);
                 cantidadTv.setText(productos == null ? "No hay productos." : productos.isEmpty() ?
                         "No hay productos." : "Hay " + productos.size() + " productos.");
+                validarCampos();
             }
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        validarCampos();
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        SystemUtils.getInstance().keyboard(context, v, !hasFocus);
+    }
+
+    private void validarCampos() {
+        registrarEditarBtn.setEnabled(!nombreTxt.getText().toString().trim().isEmpty() && !duracionTxt.getText().toString().trim().isEmpty() &&
+                !productos.isEmpty());
+        registrarEditarBtn.setTextColor(registrarEditarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
     }
 }

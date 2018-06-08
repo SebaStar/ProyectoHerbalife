@@ -7,11 +7,10 @@
     android:fitsSystemWindows="true"
     tools:context="cl.inacap.herbalifeproject.HSeguimientoActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/hseguimiento_appbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/hseguimiento_toolbar"
@@ -20,36 +19,48 @@
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:layout_collapseMode="pin"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:navigationIcon="?attr/homeAsUpIndicator">
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-            <include layout="@layout/layout_custom_toolbar"
+            <include
+                layout="@layout/layout_custom_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="35dp" />
 
         </android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/hseguimiento_vacio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Sin seguimientos"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/hseguimiento_vacio"
-        android:text="Sin seguimientos"
-        android:textSize="18sp"
-        android:textColor="@color/colorAccent"
-        android:visibility="gone"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            <android.support.v4.view.ViewPager
+                android:id="@+id/hseguimiento_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/hseguimiento_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/hseguimiento_fabEditar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="15dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_edit" />
 
 </android.support.design.widget.CoordinatorLayout>

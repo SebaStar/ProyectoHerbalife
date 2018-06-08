@@ -2,8 +2,8 @@ package cl.inacap.herbalifeproject;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -17,12 +17,13 @@ public class MainClienteActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     Button registrarSeguimiento, verProgramaNutricional, historialSeguimiento, graficosProgreso;
-    TextView clienteTv;
+    TextView titleTv, clienteTv;
 
     HerbalifeDAO hdao;
     Cliente cliente;
 
     Context context;
+    Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +39,13 @@ public class MainClienteActivity extends AppCompatActivity {
         verProgramaNutricional = findViewById(R.id.main_cliente_verProgramaNutricional);
         historialSeguimiento = findViewById(R.id.main_cliente_historialSeguimiento);
         graficosProgreso = findViewById(R.id.main_cliente_graficosProgreso);
+        titleTv = toolbar.findViewById(R.id.toolbar_title);
         clienteTv = toolbar.findViewById(R.id.toolbar_username);
 
         hdao = new HerbalifeDAO(context);
         cliente = hdao.buscarCliente(getIntent().getIntExtra(Solicitud.CLIENTE_ID, -1));
 
+        titleTv.setText("Ficha de seguimiento");
         clienteTv.setText(cliente.getNombre());
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +56,7 @@ public class MainClienteActivity extends AppCompatActivity {
         registrarSeguimiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, RESeguimientoActivity.class);
+                i = new Intent(context, RESeguimientoActivity.class);
                 i.putExtra(Solicitud.CLIENTE_ID, cliente.getId());
                 startActivity(i);
             }
@@ -61,7 +64,7 @@ public class MainClienteActivity extends AppCompatActivity {
         verProgramaNutricional.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, AProgramaNutricionalActivity.class);
+                i = new Intent(context, AProgramaNutricionalActivity.class);
                 i.putExtra(Solicitud.CLIENTE_ID, cliente.getId());
                 startActivity(i);
             }
@@ -69,7 +72,7 @@ public class MainClienteActivity extends AppCompatActivity {
         historialSeguimiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, HSeguimientoActivity.class);
+                i = new Intent(context, HSeguimientoActivity.class);
                 i.putExtra(Solicitud.CLIENTE_ID, cliente.getId());
                 startActivity(i);
             }
@@ -77,7 +80,7 @@ public class MainClienteActivity extends AppCompatActivity {
         graficosProgreso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, GraficosActivity.class);
+                i = new Intent(context, GraficosActivity.class);
                 i.putExtra(Solicitud.CLIENTE_ID, cliente.getId());
                 startActivity(i);
             }

@@ -3,8 +3,8 @@ package cl.inacap.herbalifeproject;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -18,7 +18,7 @@ import cl.inacap.herbalifeproject.dto.Usuario;
 import cl.inacap.herbalifeproject.utils.Preferences;
 import cl.inacap.herbalifeproject.utils.SystemUtils;
 
-public class RestaurarActivity extends AppCompatActivity {
+public class RestaurarActivity extends AppCompatActivity implements TextWatcher, View.OnFocusChangeListener {
 
     TextView usernameTv;
     EditText currentPasswordTxt, passwordTxt, repeatPasswordTxt;
@@ -48,76 +48,13 @@ public class RestaurarActivity extends AppCompatActivity {
         usuario = hdao.buscarUsuario(Preferences.getPreferenceInt(context, Preferences.MAIN_PREF, Preferences.USUARIO_ID));
         usernameTv.setText(usuario.getUsername());
 
-        currentPasswordTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        currentPasswordTxt.addTextChangedListener(this);
+        passwordTxt.addTextChangedListener(this);
+        repeatPasswordTxt.addTextChangedListener(this);
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                aceptarBtn.setEnabled(s.toString().trim().length() > 0 && passwordTxt.getText().toString().trim().length() > 0 && repeatPasswordTxt.getText().toString().trim().length() > 0);
-                aceptarBtn.setTextColor(aceptarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
-            }
-        });
-        passwordTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                aceptarBtn.setEnabled(s.toString().trim().length() > 0 && currentPasswordTxt.getText().toString().trim().length() > 0 && repeatPasswordTxt.getText().toString().trim().length() > 0);
-                aceptarBtn.setTextColor(aceptarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
-            }
-        });
-        repeatPasswordTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                aceptarBtn.setEnabled(s.toString().trim().length() > 0 && passwordTxt.getText().toString().trim().length() > 0 && currentPasswordTxt.getText().toString().trim().length() > 0);
-                aceptarBtn.setTextColor(aceptarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
-            }
-        });
-
-        currentPasswordTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
-            }
-        });
-        passwordTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
-            }
-        });
-        repeatPasswordTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                SystemUtils.getInstance().keyboard(context, v, !hasFocus);
-            }
-        });
+        currentPasswordTxt.setOnFocusChangeListener(this);
+        passwordTxt.setOnFocusChangeListener(this);
+        repeatPasswordTxt.setOnFocusChangeListener(this);
 
         aceptarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,5 +84,27 @@ public class RestaurarActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        aceptarBtn.setEnabled(!currentPasswordTxt.getText().toString().trim().isEmpty() && !passwordTxt.getText().toString().trim().isEmpty() &&
+                !repeatPasswordTxt.getText().toString().trim().isEmpty());
+        aceptarBtn.setTextColor(aceptarBtn.isEnabled() ? Color.WHITE : Color.rgb(111, 111, 111));
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        SystemUtils.getInstance().keyboard(context, v, !hasFocus);
     }
 }
